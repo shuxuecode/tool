@@ -11,8 +11,9 @@
     <div>
         <label>时间戳</label>
         <input id="timestamp_input" />
-        <select>
-            <option>毫秒(ms)</option>
+        <select id="time_unit">
+            <option value="ms">毫秒(ms)</option>
+            <option value="s">秒(s)</option>
         </select>
         <button onclick="convert()">转换></button>
         <input id="datetime_input" />
@@ -25,6 +26,12 @@
             timestamp = parseInt(timestamp)
 
             if (!isNaN(timestamp)) {
+                var unit = document.getElementById("time_unit").value
+                if(unit === "ms"){
+                    timestamp = timestamp
+                }else if(unit === "s"){
+                    timestamp = timestamp * 1000
+                }
                 var date = new Date(timestamp);
 
                 document.getElementById("datetime_input").value = date.Format("yyyy-MM-dd hh:mm:ss")
