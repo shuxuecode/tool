@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>Json在线解析及格式化验证</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta http-equiv="Cache-Control" content="max-age=7200" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Menlo, Monaco, Consolas, "Helvetica Neue", Helvetica, "Courier New", '微软雅黑', monospace, Arial, sans-serif, '黑体';
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <main style="height: 85%; min-height: 550px;">
+            <div style="height: 100%; width: 40%; float: left; position: relative;">
+                <textarea id="json-src" placeholder="在此输入json字符串或XML字符串..." class="form-control"
+                    style="height:722px;padding:0 10px 10px 20px;border:0;border-right:solid 1px #ddd;border-bottom:solid 1px #ddd;border-radius:0;resize: none; outline:none;">{&#13"Json解析":"支持格式化高亮折叠",&#13"支持XML转换":"支持XML转换Json,Json转XML",&#13"Json格式验证":"更详细准确的错误信息"}</textarea>
+            </div>
+            <!--  -->
+            <div style="width: 59%; float: left; position: relative;">
+                <nav style="padding: 10px; font-size: 16px; border-bottom:solid 1px #ddd;">
+
+                </nav>
+                <div>
+                    <div class="ro" id="json-target" style="padding:0px 25px;">
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!--  -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jsonlint.js"></script>
+    <script src="js/jquery.json.js"></script>
+
+    <!--  -->
+    <script type="text/javascript">
+
+
+        $('#json-src').keyup(function () {
+            var content = $.trim($(this).val());
+
+            content = content.replace(/[\r\n]/g,"");
+            current_json = jsonlint.parse(content);
+            current_json_str = JSON.stringify(current_json);
+            result = new JSONFormat(content,4).toString();
+
+            $('#json-target').html(result);
+        });
+    </script>
+</body>
+
+</html>
