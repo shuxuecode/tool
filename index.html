@@ -3,19 +3,62 @@
     <head>
         <meta charset="utf8" />
         <title></title>
+        <!-- <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.1/css/bootstrap.min.css" rel="stylesheet"> -->
+        <link href="./json/JSONFormat/css/bootstrap.min.css" rel="stylesheet" />
     </head>
     <body>
 
+<!-- 
+        
+        
+         -->
 
-        <iframe src="./toolbox/timestamp.html" width="100%">
+        <div>
 
-        </iframe>
-        <iframe src="./json/jsonformat.html" width="100%">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">JSON格式化</a></li>
+              <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+              <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">时间戳转换</a></li>
+              <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+            </ul>
+          
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane active" id="home">
+                <iframe src="./json/JSONFormat/index.html" width="100%">
 
-        </iframe>
-        <iframe src="./json/JSONFormat/index.html" width="100%">
+                </iframe>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="profile">
+                <iframe src="./json/jsonformat.html" width="100%">
 
-        </iframe>
+                </iframe>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="messages">
+                <iframe src="./toolbox/timestamp.html" width="100%">
 
+                </iframe>
+              </div>
+              <div role="tabpanel" class="tab-pane" id="settings">...</div>
+            </div>
+          
+          </div>
+
+          <script src="./json/js/jquery.min.js"></script>
+          <script src="./json/JSONFormat/js/bootstrap.min.js"></script>
+          <!-- <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.1/js/bootstrap.min.js"></script>       -->
+
+          <script>
+            $(function(){
+                setIframeHeight()
+                setTimeout(setIframeHeight, 1000)
+            });
+
+            setIframeHeight = function(){
+                $('iframe').height(window.outerHeight)
+            }
+
+          </script>
     </body>
 </html>
