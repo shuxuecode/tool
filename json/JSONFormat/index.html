@@ -46,14 +46,14 @@
     </div>
 </header>
 
-<h1>源码地址 https://github.com/BigHeisenberg/JSONFormat</h1>
+<h1 style="display: none;">源码地址 https://github.com/BigHeisenberg/JSONFormat</h1>
 
 <main class="row-fluid" style="height:85%;min-height:550px;">
     <div class="col-md-5" style="padding:0px;height:100%;">
-        <textarea id="json-src" placeholder="在此输入json字符串或XML字符串..."   class="form-control"  style="height:722px;padding:0 10px 10px 20px;border:0;border-right:solid 1px #ddd;border-bottom:solid 1px #ddd;border-radius:0;resize: none; outline:none;">{&#13"Json解析":"支持格式化高亮折叠",&#13"支持XML转换":"支持XML转换Json,Json转XML",&#13"Json格式验证":"更详细准确的错误信息"}</textarea>
+        <textarea id="json-src" placeholder="在此输入json字符串或XML字符串..."   class="form-control"  style="height:842px;padding:0 10px 10px 20px;border:0;border-right:solid 1px #ddd;border-bottom:solid 1px #ddd;border-radius:0;resize: none; outline:none;">{&#13"Json解析":"支持格式化高亮折叠",&#13"支持XML转换":"支持XML转换Json,Json转XML",&#13"Json格式验证":"更详细准确的错误信息"}</textarea>
     </div>
     <div class="col-md-7" style="padding:0;">
-        <div style="padding:10px;font-size:16px;border-bottom:solid 1px #ddd;" class="navi">
+        <div style="height:42px; padding:10px;font-size:16px;border-bottom:solid 1px #ddd;" class="navi">
             <a href="#" class="tip zip" title="压缩"  data-placement="bottom"><i class="fa fa-database"></i></a>
 						<a href="#" class="tip xml" title="转XML"  data-placement="bottom"><i class="fa fa-file-excel-o"></i></a>
             <a href="#" class="tip shown"  title="显示行号"  data-placement="bottom"><i class="glyphicon glyphicon-sort-by-order"></i></a>
@@ -62,11 +62,11 @@
             <a href="#" class="tip copy" title="复制" data-clipboard-target="#json-target"  data-placement="bottom"><i class="fa fa-copy"></i></a>
             <a href="#" class="tip compress" title="折叠"  data-placement="bottom"><i class="fa fa-compress"></i></a>
         </div>
-        <div id="right-box"  style="height:679px;border-right:solid 1px #ddd;border-bottom:solid 1px #ddd;border-radius:0;resize: none;overflow-y:scroll; outline:none;position:relative;">
+        <div id="right-box"  style="height:800px;border-right:solid 1px #ddd;border-bottom:solid 1px #ddd;border-radius:0;resize: none;overflow-y:scroll; outline:none;position:relative;">
             <div id="line-num" style="background-color:#fafafa;padding:0px 8px;float:left;border-right:dashed 1px #eee;display:none;z-index:-1;color:#999;position:absolute;text-align:center;over-flow:hidden;">
             <div>0</div>
             </div>
-            <div class="ro" id="json-target" style="padding:0px 25px;over">
+            <div class="ro" id="json-target" style="padding:0px 25px;">
             </div>
         </div>
         <form id="form-save" method="POST"><input type="hidden" value="" id="txt-content" name="content"></form>
