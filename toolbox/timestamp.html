@@ -17,6 +17,16 @@
         使用日历插件 todo
     </code>
 
+
+
+    <h2>时间戳</h2>
+    <div>
+        <label>时间戳</label>
+        <input id="timestamp_now" disabled />
+        <!-- <button onclick="convert()">转换></button>
+        <input id="datetime_input" /> -->
+    </div>
+
     <h2>时间戳转换</h2>
     <div>
         <label>时间戳</label>
@@ -28,6 +38,15 @@
         <button onclick="convert()">转换></button>
         <input id="datetime_input" />
     </div>
+
+    <script>
+        
+        setInterval(showNow, 1000);
+
+        function showNow() {
+            document.getElementById("timestamp_now").value = new Date().getTime()
+        }
+    </script>
 
     <script>
         function convert() {
@@ -48,6 +67,10 @@
             }
 
         }
+
+
+        
+
     </script>
     <script>
         //  对Date的扩展，将 Date 转化为指定格式的String
