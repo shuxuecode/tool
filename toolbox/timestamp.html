@@ -22,9 +22,10 @@
     <h2>时间戳</h2>
     <div>
         <label>时间戳</label>
-        <input id="timestamp_now" disabled />
+        <input id="timestamp_now" readonly />
         <!-- <button onclick="convert()">转换></button>
         <input id="datetime_input" /> -->
+        <button id="target" data-clipboard-action="copy" data-clipboard-target="#timestamp_now">复制到剪切板</button>
     </div>
 
     <h2>时间戳转换</h2>
@@ -39,13 +40,30 @@
         <input id="datetime_input" />
     </div>
 
+
+
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
     <script>
-        
+
         setInterval(showNow, 1000);
 
         function showNow() {
             document.getElementById("timestamp_now").value = new Date().getTime()
         }
+
+        var clipboard = new Clipboard('#target')
+        clipboard.on('success', function (e) {
+            // console.info('Action:', e.action);
+            // console.info('Text:', e.text);
+            // console.info('Trigger:', e.trigger);
+
+            e.clearSelection();
+            
+            alert('复制成功')
+        });
     </script>
 
     <script>
@@ -56,9 +74,9 @@
 
             if (!isNaN(timestamp)) {
                 var unit = document.getElementById("time_unit").value
-                if(unit === "ms"){
+                if (unit === "ms") {
                     timestamp = timestamp
-                }else if(unit === "s"){
+                } else if (unit === "s") {
                     timestamp = timestamp * 1000
                 }
                 var date = new Date(timestamp);
@@ -69,7 +87,7 @@
         }
 
 
-        
+
 
     </script>
     <script>
