@@ -23,9 +23,11 @@
     <div>
         <label>时间戳</label>
         <input id="timestamp_now" readonly />
-        <!-- <button onclick="convert()">转换></button>
-        <input id="datetime_input" /> -->
+        <!-- <button onclick="convert()">转换></button> -->
+        
         <button id="target" data-clipboard-action="copy" data-clipboard-target="#timestamp_now">复制到剪切板</button>
+
+        <input id="timestamp_date_now" readonly />
     </div>
 
     <h2>时间戳转换</h2>
@@ -51,7 +53,9 @@
         setInterval(showNow, 1000);
 
         function showNow() {
-            document.getElementById("timestamp_now").value = new Date().getTime()
+            let now = new Date()
+            document.getElementById("timestamp_now").value = now.getTime()
+            document.getElementById("timestamp_date_now").value = now.Format("yyyy-MM-dd hh:mm:ss")
         }
 
         var clipboard = new Clipboard('#target')
