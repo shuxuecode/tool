@@ -24,7 +24,7 @@
         <label>时间戳</label>
         <input id="timestamp_now" readonly />
         <!-- <button onclick="convert()">转换></button> -->
-        
+
         <button id="target" data-clipboard-action="copy" data-clipboard-target="#timestamp_now">复制到剪切板</button>
 
         <input id="timestamp_date_now" readonly />
@@ -46,24 +46,26 @@
     <h2>日期相差</h2>
     <div>
         <label>开始时间</label>
-        <input id="d12" type="text" />
-        <img onclick="WdatePicker({el:'d12'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+        <input id="startDate" type="text" onClick="WdatePicker({el:this})" />
+        <img onclick="WdatePicker({el:'startDate'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22"
+            align="absmiddle">
 
-        <br/>
+        <br />
 
         <label>结束时间</label>
-        <input id="d13" type="text" />
-        <img onclick="WdatePicker({el:'d13'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+        <input id="endDate" type="text" onClick="WdatePicker({el:this})" />
+        <img onclick="WdatePicker({el:'endDate'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22"
+            align="absmiddle">
 
-        <br/>
+        <br />
 
-        <input id="timestamp_input" />
+        <label>选择单位</label>
         <select id="time_unit">
-            <option value="ms">毫秒(ms)</option>
-            <option value="s">秒(s)</option>
+            <option value="ms">天(day)</option>
+            <option value="s">小时(hour)</option>
         </select>
-        <button onclick="convert()">计算</button>
-        <input id="datetime_input" />
+        <button onclick="betweenDates()">计算</button>
+        <input id="datetime_diff" />
     </div>
 
 
@@ -91,7 +93,7 @@
             // console.info('Trigger:', e.trigger);
 
             e.clearSelection();
-            
+
             alert('复制成功')
         });
     </script>
@@ -117,6 +119,22 @@
         }
 
 
+
+        function betweenDates() {
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+
+            startDate = new Date(startDate)
+            endDate = new Date(endDate)
+
+            // 获取两个日期对象之间的毫秒数差值  
+            var diff = Math.abs(endDate.getTime() - startDate.getTime());
+
+            // 将毫秒数转换为天数  
+            var days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // 1000 毫秒/秒 * 60 秒/分钟 * 60 分钟/小时 * 24 小时/天  
+
+            document.getElementById("datetime_diff").value = days
+        }
 
 
     </script>
