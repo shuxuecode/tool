@@ -45,13 +45,24 @@
 
     <h2>日期相差</h2>
     <div>
-        <label>时间戳</label>
+        <label>开始时间</label>
+        <input id="d12" type="text" />
+        <img onclick="WdatePicker({el:'d12'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+
+        <br/>
+
+        <label>结束时间</label>
+        <input id="d13" type="text" />
+        <img onclick="WdatePicker({el:'d13'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+
+        <br/>
+
         <input id="timestamp_input" />
         <select id="time_unit">
             <option value="ms">毫秒(ms)</option>
             <option value="s">秒(s)</option>
         </select>
-        <button onclick="convert()">转换></button>
+        <button onclick="convert()">计算</button>
         <input id="datetime_input" />
     </div>
 
@@ -60,7 +71,10 @@
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+    <script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
+
     <script>
+
 
         setInterval(showNow, 1000);
 
