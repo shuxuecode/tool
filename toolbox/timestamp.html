@@ -43,7 +43,51 @@
     </div>
 
 
-    <h2>日期相差</h2>
+    <h2>间隔时间计算</h2>
+    <div>
+        <label>开始时间</label>
+        <input id="startDate" type="text" onClick="WdatePicker({el:this})" />
+        <img onclick="WdatePicker({el:'startDate'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22"
+            align="absmiddle">
+
+        <br />
+
+        <label>结束时间</label>
+        <input id="endDate" type="text" onClick="WdatePicker({el:this})" />
+        <img onclick="WdatePicker({el:'endDate'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22"
+            align="absmiddle">
+
+        <br />
+
+        <button onclick="betweenDates()">计算两个时间差</button>
+        <table>
+            <tr>
+                <td>两个时间相差</td>
+                <td>0天0时0分0秒</td>
+            </tr>
+            <tr>
+                <td>按天计算相差</td>
+                <td>0天</td>
+            </tr>
+            <tr>
+                <td>按时计算相差</td>
+                <td>0时</td>
+            </tr>
+            <tr>
+                <td>按分计算相差</td>
+                <td>0分</td>
+            </tr>
+            <tr>
+                <td>按秒计算相差</td>
+                <td>0秒</td>
+            </tr>
+        </table>
+
+        <input id="datetime_diff" />
+    </div>
+
+
+    <h2>间隔时间计算</h2>
     <div>
         <label>开始时间</label>
         <input id="startDate" type="text" onClick="WdatePicker({el:this})" />
