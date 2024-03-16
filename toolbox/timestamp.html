@@ -46,14 +46,16 @@
     <h2>间隔时间计算</h2>
     <div>
         <label>开始时间</label>
-        <input id="startDate" type="text" onClick="WdatePicker({el:this})" />
+        <input id="startDate" type="text" onClick="WdatePicker({el:this, isShowWeek:true, dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
         <img onclick="WdatePicker({el:'startDate'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22"
             align="absmiddle">
 
         <br />
 
+        {isShowWeek:true}
+
         <label>结束时间</label>
-        <input id="endDate" type="text" onClick="WdatePicker({el:this})" />
+        <input id="endDate" type="text" onClick="WdatePicker({el:this, isShowWeek:true})" />
         <img onclick="WdatePicker({el:'endDate'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22"
             align="absmiddle">
 
