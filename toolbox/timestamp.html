@@ -46,7 +46,8 @@
     <h2>间隔时间计算</h2>
     <div>
         <label>开始时间</label>
-        <input id="startDate" type="text" onClick="WdatePicker({el:this, isShowWeek:true, dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+        <input id="startDate" type="text" 
+                onClick="WdatePicker({el:this, isShowWeek:true, dateFmt:'yyyy-MM-dd HH:mm:ss', hmsMenuCfg:{H: [1, 6], m: [1, 10], s: [1, 6]}})" />
         <img onclick="WdatePicker({el:'startDate'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22"
             align="absmiddle">
 
