@@ -55,13 +55,14 @@
 
 
         <label>结束时间</label>
-        <input id="endDate" type="text" onClick="WdatePicker({el:this, isShowWeek:true})" />
+        <input id="endDate" type="text" 
+                onClick="WdatePicker({el:this, isShowWeek:true, dateFmt:'yyyy-MM-dd HH:mm:ss', hmsMenuCfg:{H: [1, 6], m: [2, 6], s: [2, 6]}})" />
         <img onclick="WdatePicker({el:'endDate'})" src="../My97DatePicker/skin/datePicker.gif" width="16" height="22"
             align="absmiddle">
 
         <br />
 
-        <button onclick="betweenDates()">计算两个时间差</button>
+        <button onclick="calculateTime()">计算两个时间差</button>
         <table>
             <tr>
                 <td>两个时间相差</td>
@@ -181,7 +182,25 @@
 
             document.getElementById("datetime_diff").value = days
         }
+        
 
+    </script>
+    <script>
+        function calculateTime() {
+            var startDate = document.getElementById("startDate").value;
+            var endDate = document.getElementById("endDate").value;
+
+            startDate = new Date(startDate)
+            endDate = new Date(endDate)
+
+            // 获取两个日期对象之间的毫秒数差值  
+            var diff = Math.abs(endDate.getTime() - startDate.getTime());
+
+            // 将毫秒数转换为天数  
+            var days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // 1000 毫秒/秒 * 60 秒/分钟 * 60 分钟/小时 * 24 小时/天  
+
+            document.getElementById("datetime_diff").value = days
+        }
 
     </script>
     <script>
