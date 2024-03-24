@@ -63,26 +63,26 @@
         <br />
 
         <button onclick="calculateTime()">计算两个时间差</button>
-        <table>
+        <table border="1">
             <tr>
                 <td>两个时间相差</td>
-                <td>0天0时0分0秒</td>
+                <td id="dayHourMinuteSecondId">0天0时0分0秒</td>
             </tr>
             <tr>
                 <td>按天计算相差</td>
-                <td>0天</td>
+                <td id="dayId">0天</td>
             </tr>
             <tr>
                 <td>按时计算相差</td>
-                <td>0时</td>
+                <td id="hourId">0时</td>
             </tr>
             <tr>
                 <td>按分计算相差</td>
-                <td>0分</td>
+                <td id="minuteId">0分</td>
             </tr>
             <tr>
                 <td>按秒计算相差</td>
-                <td>0秒</td>
+                <td id="secondId">0秒</td>
             </tr>
         </table>
 
@@ -199,7 +199,17 @@
             // 将毫秒数转换为天数  
             var days = Math.ceil(diff / (1000 * 60 * 60 * 24)); // 1000 毫秒/秒 * 60 秒/分钟 * 60 分钟/小时 * 24 小时/天  
 
-            document.getElementById("datetime_diff").value = days
+            var hours = Math.ceil(diff / (1000 * 60 * 60)); // 1000 毫秒/秒 * 60 秒/分钟 * 60 分钟/小时  
+            
+            var minutes = Math.ceil(diff / (1000 * 60)); // 1000 毫秒/秒 * 60 秒/分钟
+            var seconds = Math.ceil(diff / (1000)); // 1000 毫秒/秒
+
+            document.getElementById("dayId").innerHTML = days + "天"
+            document.getElementById("hourId").innerHTML = hours + "时"
+            document.getElementById("minuteId").innerHTML = minutes + "分"
+            document.getElementById("secondId").innerHTML = seconds + "秒"
+            document.getElementById("dayHourMinuteSecondId").innerHTML = days + "0天0时0分0秒"
+
         }
 
     </script>
