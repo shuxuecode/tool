@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>设置</title>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            width: 500px;
+            height: 400px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        #titleId {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>编辑</h1>
+
+    <h3 id="titleId">+</h3>
+
+    <div>
+        <label>token：</label>
+        <input type="text" id="token" />
+        <button id="updateToken">设置token</button>
+        <button id="showToken">获取token</button>
+    </div>
+
+    <div>
+        <label>owner：</label>
+        <input type="text" id="owner" />
+        <button id="updateOwner">设置owner</button>
+        <button id="showOwner">获取owner</button>
+    </div>
+
+    <div>
+        <label>repo：</label>
+        <input type="text" id="repo" />
+        <button id="updateRepo">设置repo</button>
+        <button id="showRepo">获取repo</button>
+    </div>
+
+    <div>
+        <label>filePath：</label>
+        <input type="text" id="filePath" />
+        <button id="updateFilePath">设置filePath</button>
+        <button id="showFilePath">获取filePath</button>
+    </div>
+
+
+    <div>
+        <textarea id="content" rows="10" cols="150"></textarea>
+    </div>
+
+    <div>
+        <button id="pullBtn">pull</button>
+        <button id="pushBtn">push</button>
+    </div>
+
+    <script type="text/javascript" src="js/octokat.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+</body>
+
+</html>
