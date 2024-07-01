@@ -120,16 +120,19 @@ var pullContent = function () {
     octo = new Octokat({ token: $token })
     repo = octo.repos($owner, $repo)
 
-    repo.contents($filePath).read() // Use `.read` to get the raw file.
-        .then((contents) => {        // `.fetch` is used for getting JSON
-            console.log(contents)
-            document.getElementById("content").value = contents;
-        });
+    // repo.contents($filePath).read() // Use `.read` to get the raw file.
+    //     .then((contents) => {        // `.fetch` is used for getting JSON
+    //         console.log(contents)
+    //         document.getElementById("content").value = contents;
+    //     });
 
     repo.contents($filePath).fetch()
         .then((info) => {
             // console.log(info.sha, info.content)
             sha = info.sha
+            
+            var contents = base64Decode(info.content)
+            document.getElementById("content").value = contents;
         });
 }
 
