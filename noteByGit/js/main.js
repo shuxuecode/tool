@@ -5,19 +5,14 @@
 
 
 
-
-
-
-
-
 function setToken() {
-    var token = document.getElementById('token').value;
-    localStorage.setItem('my_github_token', token);
+    localStorage.setItem('my_github_token', $("#token").val());
+    toastr.success("设置token成功")
 }
 
 function getToken() {
     var token = localStorage.getItem('my_github_token');
-    document.getElementById('token').value = token;
+    $('#token').val(token)
 }
 
 function removeAll() {
@@ -85,6 +80,7 @@ var pullContent = function () {
 
     if($token == '' || $owner == '' || $repo == '' || $filePath == '') {
         showTitle("配置为空")
+        toastr.error("配置为空")
         return
     }
 
