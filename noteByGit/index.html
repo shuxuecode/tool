@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 
 <html lang="en">
+
 <head>
     <title>note by github</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
-    
-    <link rel="stylesheet" href="css/toastr.min.css" >
+
+    <link rel="stylesheet" href="css/toastr.min.css">
+    <link rel="stylesheet" href="js/zTree/css/zTreeStyle.css">
     <style>
         body {
             width: 500px;
@@ -71,7 +73,7 @@
     <div>
         <button id="pullBtn">pull</button>
         <button id="pushBtn">push</button>
-        
+
         <button id="getFileBtn">获取文件列表</button>
 
     </div>
@@ -82,8 +84,14 @@
         </ul>
     </div>
 
+    <div>
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/toastr.min.js"></script>
+
+    <script type="text/javascript" src="js/zTree/js/jquery.ztree.all.min.js"></script>
 
     <script type="text/javascript" src="js/octokat.js"></script>
 
@@ -92,6 +100,67 @@
 
     <script>
         toastr.options.positionClass = 'toast-top-center'
+
+
+        var zTreeObj;
+        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+        var setting = {
+            data: {
+                key: {
+                    name: "title"
+                }
+            },
+            view: {
+                showLine: false
+            },
+            edit: {
+                enable: true,
+                showRemoveBtn: false,
+                showRenameBtn: false
+            },
+            // callback: {
+            //     onClick: zTreeOnClick,
+            //     onRightClick: OnRightClick,
+            //     onDrag: onDrag,
+            //     onDrop: onDrop,
+            // }
+        };
+
+        function initTree(zNodes) {
+            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            // todo
+            // if (curId) {
+            //     var treeNode = zTreeObj.getNodeByParam('id', curId, null);
+            //     var parentTreeNode = zTreeObj.getNodeByParam('id', treeNode.pid, null);
+            //     // 展开父节点
+            //     zTreeObj.expandNode(parentTreeNode)
+            //     // 选中当前节点
+            //     zTreeObj.selectNode(treeNode)
+            //     // 触发当前节点的点击事件
+            //     zTreeObj.setting.callback.onClick(null, curId, treeNode)
+            // } else {
+            //     // todo
+            //     var treeNode = zTreeObj.getNodeByParam('id', zNodes[0].id, null);
+            //     // 展开
+            //     zTreeObj.expandNode(treeNode)
+            // }
+        }
+
+        var data = [
+            {
+                "id": 1,
+                "pid": 0,
+                "title": 'a',
+                "children": [
+                    {
+                        "title": 'b'
+                    }
+                ]
+            }
+        ]
+
+        initTree(data)
     </script>
 </body>
+
 </html>
