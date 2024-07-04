@@ -33,7 +33,7 @@
 
 <body>
 
-    <h1>编辑</h1>
+    <h1>NOTE</h1>
 
     <h3 id="titleId">+</h3>
 
@@ -85,7 +85,7 @@
     </div>
 
     <div>
-        <ul id="treeDemo" class="ztree"></ul>
+        <ul id="gitTree" class="ztree"></ul>
     </div>
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -107,11 +107,12 @@
         var setting = {
             data: {
                 key: {
-                    name: "title"
+                    name: "name"
                 }
             },
             view: {
-                showLine: false
+                showLine: false,
+                addDiyDom: addDiyDom
             },
             edit: {
                 enable: true,
@@ -127,7 +128,7 @@
         };
 
         function initTree(zNodes) {
-            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            zTreeObj = $.fn.zTree.init($("#gitTree"), setting, zNodes);
             // todo
             // if (curId) {
             //     var treeNode = zTreeObj.getNodeByParam('id', curId, null);
@@ -146,16 +147,37 @@
             // }
         }
 
+        function addDiyDom(treeId, treeNode) {
+            console.log('treeId=', treeId)
+            console.log('treeNode=', treeNode)
+            var aObj = $("#" + treeNode.tId + "_a");
+            // if ($("#diyBtn_" + treeNode.id).length > 0) return;
+            var editStr = "<span id='diyBtn_space_" + treeNode.id + "' > </span>"
+                + "<button type='button' class='diyBtn1' id='diyBtn_" + treeNode.id
+                + "' title='" + treeNode.name + "' onfocus='this.blur();'>123</button>";
+            aObj.append(editStr);
+            // var btn = $("#diyBtn_" + treeNode.id);
+            // if (btn) btn.bind("click", function () { alert("diy Button for " + treeNode.name); });
+        }
+
+
         var data = [
             {
-                "id": 1,
+                "id": "a",
                 "pid": 0,
-                "title": 'a',
+                "name": 'a',
                 "children": [
                     {
-                        "title": 'b'
+                        "id": "a/b",
+                        "pid": "a",
+                        "name": 'a/b'
                     }
                 ]
+            },
+            {
+                "id": "readme.md",
+                "pid": 0,
+                "name": 'readme.md'
             }
         ]
 
