@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="js/zTree/css/zTreeStyle.css">
     <style>
         body {
-            width: 500px;
-            height: 400px;
+            /* width: 500px; */
+            /* height: 400px; */
+            width: 100%;
+            height: 100vh;
         }
 
         label {
@@ -32,6 +34,11 @@
             color: blue;
             text-decoration: underline;
         }
+
+        textarea {
+            height: 90%;
+            width: 90%;
+        }
     </style>
 </head>
 
@@ -47,40 +54,37 @@
         <label>token：</label>
         <input type="text" id="token" />
         <button id="updateToken">设置token</button>
-        <button id="showToken">获取token</button>
     </div>
 
     <div>
         <label>owner：</label>
         <input type="text" id="owner" />
         <button id="updateOwner">设置owner</button>
-        <button id="showOwner">获取owner</button>
     </div>
 
     <div>
         <label>repo：</label>
         <input type="text" id="repo" />
         <button id="updateRepo">设置repo</button>
-        <button id="showRepo">获取repo</button>
     </div>
 
     <div>
         <label>filePath：</label>
         <input type="text" id="filePath" />
         <button id="updateFilePath">设置filePath</button>
-        <button id="showFilePath">获取filePath</button>
+        <!-- <button id="showFilePath">获取filePath</button> -->
+        <button id="getFileBtn">获取文件列表</button>
     </div>
 
 
-    <div>
-        <textarea id="content" rows="10" cols="150"></textarea>
+    <div style="height: 40%;">
+        <!-- <textarea id="content" rows="10" cols="150"></textarea> -->
+        <textarea id="content"></textarea>
     </div>
 
     <div>
         <button id="pullBtn">pull</button>
         <button id="pushBtn">push</button>
-
-        <button id="getFileBtn">获取文件列表</button>
 
     </div>
 

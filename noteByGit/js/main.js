@@ -195,16 +195,12 @@ var init = function () {
 
     // 绑定事件
     document.getElementById('updateToken').onclick = setToken;
-    document.getElementById('showToken').onclick = getToken;
 
     document.getElementById('updateOwner').onclick = setOwner;
-    document.getElementById('showOwner').onclick = getOwner;
 
     document.getElementById('updateRepo').onclick = setRepo;
-    document.getElementById('showRepo').onclick = getRepo;
 
     document.getElementById('updateFilePath').onclick = setFilePath;
-    document.getElementById('showFilePath').onclick = getFilePath;
 
     document.getElementById('pullBtn').onclick = pullContent;
     document.getElementById('pushBtn').onclick = pushContent;
