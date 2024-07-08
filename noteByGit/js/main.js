@@ -25,6 +25,7 @@ function removeAll() {
 // 
 function setOwner() {
     localStorage.setItem('my_github_owner', document.getElementById('owner').value);
+    toastr.success("设置owner成功")
 }
 
 function getOwner() {
@@ -34,6 +35,7 @@ function getOwner() {
 // 
 function setRepo() {
     localStorage.setItem('my_github_repo', document.getElementById('repo').value);
+    toastr.success("设置repo成功")
 }
 
 function getRepo() {
@@ -43,6 +45,7 @@ function getRepo() {
 // 
 function setFilePath() {
     localStorage.setItem('my_github_filepath', document.getElementById('filePath').value);
+    toastr.success("设置filePath成功")
 }
 
 function getFilePath() {
@@ -190,6 +193,24 @@ function setNewFilePath(e){
 }
 
 
+var check = function () {
+    if ($('#repo').val().trim() === '') {
+        $('#h2id').html("repo未设置")
+        return;
+    }
+    
+    if ($('#owner').val().trim() === '') {
+        $('#h2id').html("owner未设置")
+        return;
+    }
+
+    if ($('#token').val().trim() === '') {
+        $('#h2id').html("token未设置")
+        return;
+    }
+
+}
+
 
 var init = function () {
 
@@ -214,6 +235,10 @@ var init = function () {
     getOwner();
     getRepo();
     getFilePath();
+    
+    // 前置检查
+    check();
+
 }
 
 
