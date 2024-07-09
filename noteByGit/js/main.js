@@ -80,7 +80,7 @@ var getConfig = function () {
     $repo = document.getElementById('repo').value
     $filePath = document.getElementById('filePath').value
 
-    if($token == '' || $owner == '' || $repo == '' || $filePath == '') {
+    if ($token == '' || $owner == '' || $repo == '' || $filePath == '') {
         toastr.error("配置为空")
         return false
     }
@@ -117,7 +117,7 @@ var pullContent = function () {
 
 var pushContent = function () {
 
-    if(repo == undefined || $filePath == '') {
+    if (repo == undefined || $filePath == '') {
         toastr.error("repo未配置")
         return
     }
@@ -148,13 +148,13 @@ var pushContent = function () {
 
 
 var getFileList = function () {
-   
+
     $token = document.getElementById('token').value
     $owner = document.getElementById('owner').value
     $repo = document.getElementById('repo').value
     $filePath = document.getElementById('filePath').value
 
-    if($token == '' || $owner == '' || $repo == '') {
+    if ($token == '' || $owner == '' || $repo == '') {
         toastr.error("配置为空")
         return false
     }
@@ -174,38 +174,96 @@ var getFileList = function () {
             console.log(`path: ${file.path}, type: ${file.type}`);
 
             if (file.type == 'dir') {
-                html += '<li onclick="setNewFilePath(this)" class="dirCls">' + file.path + '</li>'
+                html += '<div>'
+                html += '<button onclick="expandFile(this)">展开</button>'
+                html += '<span class="dirCls"> ' + file.path + '</span> '
+                html += '</div> '
             } else {
-                html += '<li onclick="setNewFilePath(this)">' + file.path + '</li>'
+                // html += '<div onclick="setNewFilePath(this)">' + file.path + '</div>'
+                html += '<div>'
+                html += '<button onclick="openFile(this)">打开</button>'
+                html += '<span class="dirCls2"> ' + file.path + '</span> '
+                html += '</div> '
             }
-            
+
         });
 
         $('#fileList').html(html)
     });
 }
 
+function expandFile(e) {
+    // console.info($(e))
+    // console.info($(e).next())
+    // 获取文件路径
+    // console.info($(e).next().text())
+    var filePath = $(e).next().text().trim()
 
-function setNewFilePath(e){
-    console.info(e)
-    console.info($(e))
-    console.info($(e).text())
+    repo.contents(filePath).fetch().then(contents => {
+
+        var html = ''
+
+        contents.items.forEach(file => {
+            console.log(`path: ${file.path}, type: ${file.type}`);
+
+            if (file.type == 'dir') {
+                html += '<div>'
+                html += '<button onclick="expandFile(this)">展开</button>'
+                html += '<span class="dirCls"> ' + file.path + '</span> '
+                html += '</div> '
+            } else {
+                // html += '<div onclick="setNewFilePath(this)">' + file.path + '</div>'
+                html += '<div>'
+                html += '<button onclick="openFile(this)">打开</button>'
+                html += '<span class="dirCls2"> ' + file.path + '</span> '
+                html += '</div> '
+            }
+
+        });
+
+        $(e).parent().after(html)
+    });
+
+    
+    // 禁用按钮
+    $(e).prop('disabled', true);
+}
+
+
+function openFile(e) {
+
+    var filePath = $(e).next().text().trim()
+
+    repo.contents(filePath).fetch()
+        .then((info) => {
+            // console.log(info.sha, info.content)
+            sha = info.sha
+            showTitle("sha=" + sha)
+            var contents = base64Decode(info.content)
+            document.getElementById("content").value = contents;
+
+            toastr.info("pull成功")
+        });
+
 }
 
 
 var check = function () {
     if ($('#repo').val().trim() === '') {
         $('#h2id').html("repo未设置")
+        $('#h2id').css({ "color": "red" })
         return;
     }
-    
+
     if ($('#owner').val().trim() === '') {
         $('#h2id').html("owner未设置")
+        $('#h2id').css({ "color": "red" })
         return;
     }
 
     if ($('#token').val().trim() === '') {
         $('#h2id').html("token未设置")
+        $('#h2id').css({ "color": "red" })
         return;
     }
 
@@ -226,7 +284,7 @@ var init = function () {
     document.getElementById('pullBtn').onclick = pullContent;
     document.getElementById('pushBtn').onclick = pushContent;
 
-    $('#getFileBtn').on('click', function(){
+    $('#getFileBtn').on('click', function () {
         getFileList()
     })
 
@@ -235,7 +293,7 @@ var init = function () {
     getOwner();
     getRepo();
     getFilePath();
-    
+
     // 前置检查
     check();
 

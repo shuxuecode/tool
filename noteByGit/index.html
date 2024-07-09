@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
 
     <link rel="stylesheet" href="css/toastr.min.css">
-    <link rel="stylesheet" href="js/zTree/css/zTreeStyle.css">
     <style>
         body {
             /* width: 500px; */
@@ -41,6 +40,14 @@
             height: 90%;
             width: 90%;
         }
+
+        #fileList {
+            margin-left: 50px;
+        }
+
+        #fileList span {
+            margin-left: 12px;
+        }
     </style>
 </head>
 
@@ -49,12 +56,9 @@
     <h1>NOTE</h1>
 
     <div style="display: flex; flex-direction: row;">
-        <h2 id="h2id">token未设置</h2>
-        <h2>owner未设置</h2>
-        <h2>repo未设置</h2>
-        <h2>未连接</h2>
+        <h2 id="h2id">toast</h2>
     </div>
-    
+
 
     <h3 id="titleId">+</h3>
 
@@ -97,9 +101,10 @@
     </div>
 
     <div>
-        <ul id="fileList">
+        <div id="fileList">
 
-        </ul>
+        </div>
+
     </div>
 
     <div>
@@ -111,8 +116,6 @@
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/toastr.min.js"></script>
 
-    <script type="text/javascript" src="js/zTree/js/jquery.ztree.all.min.js"></script>
-
     <script type="text/javascript" src="js/octokat.js"></script>
 
     <script type="text/javascript" src="js/utils.js"></script>
@@ -120,88 +123,6 @@
 
     <script>
         toastr.options.positionClass = 'toast-top-center'
-
-
-        var zTreeObj;
-        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
-        var setting = {
-            data: {
-                key: {
-                    name: "name"
-                }
-            },
-            view: {
-                showLine: false,
-                addDiyDom: addDiyDom
-            },
-            edit: {
-                enable: true,
-                showRemoveBtn: false,
-                showRenameBtn: false
-            },
-            // callback: {
-            //     onClick: zTreeOnClick,
-            //     onRightClick: OnRightClick,
-            //     onDrag: onDrag,
-            //     onDrop: onDrop,
-            // }
-        };
-
-        function initTree(zNodes) {
-            zTreeObj = $.fn.zTree.init($("#gitTree"), setting, zNodes);
-            // todo
-            // if (curId) {
-            //     var treeNode = zTreeObj.getNodeByParam('id', curId, null);
-            //     var parentTreeNode = zTreeObj.getNodeByParam('id', treeNode.pid, null);
-            //     // 展开父节点
-            //     zTreeObj.expandNode(parentTreeNode)
-            //     // 选中当前节点
-            //     zTreeObj.selectNode(treeNode)
-            //     // 触发当前节点的点击事件
-            //     zTreeObj.setting.callback.onClick(null, curId, treeNode)
-            // } else {
-            //     // todo
-            //     var treeNode = zTreeObj.getNodeByParam('id', zNodes[0].id, null);
-            //     // 展开
-            //     zTreeObj.expandNode(treeNode)
-            // }
-        }
-
-        function addDiyDom(treeId, treeNode) {
-            console.log('treeId=', treeId)
-            console.log('treeNode=', treeNode)
-            var aObj = $("#" + treeNode.tId + "_a");
-            // if ($("#diyBtn_" + treeNode.id).length > 0) return;
-            var editStr = "<span id='diyBtn_space_" + treeNode.id + "' > </span>"
-                + "<button type='button' class='diyBtn1' id='diyBtn_" + treeNode.id
-                + "' title='" + treeNode.name + "' onfocus='this.blur();'>123</button>";
-            aObj.append(editStr);
-            // var btn = $("#diyBtn_" + treeNode.id);
-            // if (btn) btn.bind("click", function () { alert("diy Button for " + treeNode.name); });
-        }
-
-
-        var data = [
-            {
-                "id": "a",
-                "pid": 0,
-                "name": 'a',
-                "children": [
-                    {
-                        "id": "a/b",
-                        "pid": "a",
-                        "name": 'a/b'
-                    }
-                ]
-            },
-            {
-                "id": "readme.md",
-                "pid": 0,
-                "name": 'readme.md'
-            }
-        ]
-
-        initTree(data)
     </script>
 </body>
 
