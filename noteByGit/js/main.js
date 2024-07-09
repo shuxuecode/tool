@@ -116,6 +116,8 @@ var pullContent = function () {
 }
 
 var pushContent = function () {
+    
+    $filePath = document.getElementById('filePath').value
 
     if (repo == undefined || $filePath == '') {
         toastr.error("repo未配置")
@@ -162,8 +164,8 @@ var getFileList = function () {
     octo = new Octokat({ token: $token })
     repo = octo.repos($owner, $repo)
 
-    // repo.contents('').fetch().then(contents => {
-    repo.contents($filePath).fetch().then(contents => {
+    repo.contents('').fetch().then(contents => {
+    // repo.contents($filePath).fetch().then(contents => {
         // 'contents' is an array of files and directories in the repository's root
         //   console.log(contents)
         //   console.log(contents.items)
@@ -233,6 +235,9 @@ function expandFile(e) {
 function openFile(e) {
 
     var filePath = $(e).next().text().trim()
+
+    // 更新路径
+    $("#filePath").val(filePath)
 
     repo.contents(filePath).fetch()
         .then((info) => {
