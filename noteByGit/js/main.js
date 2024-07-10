@@ -65,21 +65,19 @@ var $repo = undefined
 var $filePath = undefined
 
 
-var getConfig = function () {
+var initRepo = function () {
     $token = document.getElementById('token').value
     $owner = document.getElementById('owner').value
     $repo = document.getElementById('repo').value
     $filePath = document.getElementById('filePath').value
 
-    if ($token == '' || $owner == '' || $repo == '' || $filePath == '') {
+    if ($token == '' || $owner == '' || $repo == '') {
         toastr.error("配置为空")
         return false
     }
 
     octo = new Octokat({ token: $token })
     repo = octo.repos($owner, $repo)
-
-    return true
 }
 
 var pullContent = function () {
@@ -167,13 +165,13 @@ var getFileList = function () {
             console.log(`path: ${file.path}, type: ${file.type}`);
 
             if (file.type == 'dir') {
-                html += '<div>'
+                html += '<div class="_dir">'
                 html += '<button onclick="expandFile(this)">展开</button>'
                 html += '<span class="dirCls"> ' + file.path + '</span> '
                 html += '</div> '
             } else {
                 // html += '<div onclick="setNewFilePath(this)">' + file.path + '</div>'
-                html += '<div>'
+                html += '<div class="_dir">'
                 html += '<button onclick="openFile(this)">打开</button>'
                 html += '<span class="dirCls2"> ' + file.path + '</span> '
                 html += '</div> '
@@ -200,13 +198,13 @@ function expandFile(e) {
             console.log(`path: ${file.path}, type: ${file.type}`);
 
             if (file.type == 'dir') {
-                html += '<div>'
+                html += '<div class="_dir">'
                 html += '<button onclick="expandFile(this)">展开</button>'
                 html += '<span class="dirCls"> ' + file.path + '</span> '
                 html += '</div> '
             } else {
                 // html += '<div onclick="setNewFilePath(this)">' + file.path + '</div>'
-                html += '<div>'
+                html += '<div class="_dir">'
                 html += '<button onclick="openFile(this)">打开</button>'
                 html += '<span class="dirCls2"> ' + file.path + '</span> '
                 html += '</div> '
@@ -214,9 +212,9 @@ function expandFile(e) {
 
         });
 
-        $(e).parent().after(html)
+        // $(e).parent().after(html)
+        $(e).parent().append(html)
     });
-
     
     // 禁用按钮
     $(e).prop('disabled', true);
@@ -245,8 +243,9 @@ function openFile(e) {
 
 
 var check = function () {
-    if ($('#repo').val().trim() === '') {
-        $('#h2id').html("repo未设置")
+
+    if ($('#token').val().trim() === '') {
+        $('#h2id').html("token未设置")
         $('#h2id').css({ "color": "red" })
         return;
     }
@@ -257,8 +256,8 @@ var check = function () {
         return;
     }
 
-    if ($('#token').val().trim() === '') {
-        $('#h2id').html("token未设置")
+    if ($('#repo').val().trim() === '') {
+        $('#h2id').html("repo未设置")
         $('#h2id').css({ "color": "red" })
         return;
     }
@@ -293,6 +292,13 @@ var init = function () {
     // 前置检查
     check();
 
+    // 加载配置
+    initRepo();
+
+    if (repo != undefined) {
+        $('#h2id').html("repo加载成功")
+        $('#h2id').css({ "color": "green" })
+    }
 }
 
 
