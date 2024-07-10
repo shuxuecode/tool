@@ -166,7 +166,7 @@ var getFileList = function () {
 
             if (file.type == 'dir') {
                 html += '<div class="_dir">'
-                html += '<button onclick="expandFile(this)">展开</button>'
+                html += '<button onclick="expandFile(this)" style="color: blue;">展开</button>'
                 html += '<span class="dirCls"> ' + file.path + '</span> '
                 html += '</div> '
             } else {
@@ -199,7 +199,7 @@ function expandFile(e) {
 
             if (file.type == 'dir') {
                 html += '<div class="_dir">'
-                html += '<button onclick="expandFile(this)">展开</button>'
+                html += '<button onclick="expandFile(this)" style="color: blue;">展开</button>'
                 html += '<span class="dirCls"> ' + file.path + '</span> '
                 html += '</div> '
             } else {
@@ -218,6 +218,8 @@ function expandFile(e) {
     
     // 禁用按钮
     $(e).prop('disabled', true);
+    // 
+    $(e).css({'color':'lightgray'});
 }
 
 
