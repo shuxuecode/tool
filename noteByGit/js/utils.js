@@ -14,8 +14,6 @@ function base64Encode(str) {
 
 
 
-
-
 // Base64 解码字符串（包括中文）
 function base64Decode(base64EncodedString) {
     // 使用atob解码Base64字符串为二进制字符串
@@ -36,4 +34,12 @@ function base64Decode(base64EncodedString) {
 }
 
 
+var showTitle = function (msg) {
+    document.getElementById("titleId").innerHTML = msg;
+}
+
+
+function base64Encode(input) {
+    return window.btoa(unescape(encodeURIComponent(input)));
+}
 

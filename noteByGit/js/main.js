@@ -53,15 +53,6 @@ function getFilePath() {
 }
 
 
-var showTitle = function (msg) {
-    document.getElementById("titleId").innerHTML = msg;
-}
-
-
-function base64Encode(input) {
-    return window.btoa(unescape(encodeURIComponent(input)));
-}
-
 
 
 var octo = undefined
@@ -93,7 +84,8 @@ var getConfig = function () {
 
 var pullContent = function () {
 
-    if (getConfig() === false) {
+    if (repo === undefined) {
+        toastr.error("repo未设置")
         return
     }
 
@@ -140,7 +132,6 @@ var pushContent = function () {
             // showTitle("sha=" + sha)
 
             toastr.info("推送成功")
-
             // 重新拉取
             pullContent()
         })
