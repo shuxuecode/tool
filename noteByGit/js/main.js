@@ -136,6 +136,37 @@ var pushContent = function () {
 }
 
 
+var addFile = function () {
+    if (repo == undefined) {
+        toastr.error("repo未配置")
+        return
+    }
+
+    $filePath = document.getElementById('filePath').value
+    if ($filePath == '') {
+        toastr.error("文件路径未配置")
+        return
+    }
+
+    var text = document.getElementById("content").value
+
+    var config = {
+        message: 'add file', // commit信息
+        content: base64Encode(text)
+    }
+
+    repo.contents($filePath).add(config)
+        .then((result) => {
+            console.log('File add success. result is ', result)
+
+            toastr.info("添加成功")
+            // 重新拉取
+            // pullContent()
+        }).catch(error => {
+            console.error("Failed to create file: ", error)
+        })
+}
+
 
 
 var getFileList = function () {
@@ -280,6 +311,8 @@ var init = function () {
 
     document.getElementById('pullBtn').onclick = pullContent;
     document.getElementById('pushBtn').onclick = pushContent;
+    document.getElementById('addFileBtn').onclick = addFile;
+    
 
     $('#getFileBtn').on('click', function () {
         getFileList()
