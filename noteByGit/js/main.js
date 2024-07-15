@@ -184,7 +184,10 @@ var getFileList = function () {
     octo = new Octokat({ token: $token })
     repo = octo.repos($owner, $repo)
 
-    repo.contents('').fetch().then(contents => {
+    repo.contents('')
+        // .read({ref: ''})
+        .fetch()
+        .then(contents => {
     // repo.contents($filePath).fetch().then(contents => {
         // 'contents' is an array of files and directories in the repository's root
         //   console.log(contents)
@@ -221,7 +224,10 @@ function expandFile(e) {
     // console.info($(e).next().text())
     var filePath = $(e).next().text().trim()
 
-    repo.contents(filePath).fetch().then(contents => {
+    repo.contents(filePath)
+        // .read({ref: ''})    
+        .fetch()
+        .then(contents => {
 
         var html = ''
 
@@ -275,6 +281,69 @@ function openFile(e) {
 }
 
 
+// 使用 .branches 方法来获取所有分支的信息
+async function getBranchList() {
+
+    const defaultBranch = await getDefaultBranch()
+
+    // console.error(defaultBranch)
+
+    repo.branches.fetch()
+        .then(branches => {
+            
+            var html = ''
+
+            console.warn('branches', branches)
+            // `branches` 将是一个包含仓库所有分支信息的数组
+            branches.items.forEach(branch => {
+                // console.log(branch.name); // 打印分支名称
+
+                html += '<div class="">'
+                html += '<button onclick="chooseBranch(this)">使用该分支</button>'
+                if(defaultBranch === branch.name) {
+                    html += '<span class="branCls"> ' + branch.name + '</span> '
+                } else {
+                    html += '<span class=""> ' + branch.name + '</span> '
+                }
+                
+                html += '</div> '
+            });
+
+            $('#branchList').html(html)
+            // 
+        })
+        .catch(error => {
+            console.error('Error fetching branches: ', error);
+        });
+    
+}
+
+
+async function getDefaultBranch() {
+    return new Promise((resolve, reject) => {
+        // 这里进行异步操作
+        // 获取仓库信息
+        repo.fetch()
+            .then(repoInfo => {
+                console.log('默认分支=', repoInfo.defaultBranch); // 打印默认分支的名称
+                resolve(repoInfo.defaultBranch);
+            })
+            .catch(error => {
+                console.error('Error fetching repository information: ', error);
+            });
+      });
+}
+
+
+function chooseBranch(e) {
+
+    var branch = $(e).next().text().trim()
+
+    // 更新分支
+    $("#branch").val(branch)
+}
+
+
 var check = function () {
 
     if ($('#token').val().trim() === '') {
@@ -317,6 +386,11 @@ var init = function () {
     $('#getFileBtn').on('click', function () {
         getFileList()
     })
+
+    $('#getBranchBtn').on('click', function () {
+        getBranchList()
+    })
+    
 
     // 初始化内容
     getToken();
