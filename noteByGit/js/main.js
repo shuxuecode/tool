@@ -42,6 +42,15 @@ function getRepo() {
     document.getElementById('repo').value = localStorage.getItem('my_github_repo');
 }
 
+function setBranch() {
+    localStorage.setItem('my_github_branch', document.getElementById('branch').value);
+    toastr.success("设置分支成功")
+}
+
+function getBranch() {
+    document.getElementById('branch').value = localStorage.getItem('my_github_branch');
+}
+
 // 
 function setFilePath() {
     localStorage.setItem('my_github_filepath', document.getElementById('filePath').value);
@@ -185,8 +194,8 @@ var getFileList = function () {
     repo = octo.repos($owner, $repo)
 
     repo.contents('')
-        // .read({ref: ''})
-        .fetch()
+        .read({ref: ''})
+        // .fetch()
         .then(contents => {
     // repo.contents($filePath).fetch().then(contents => {
         // 'contents' is an array of files and directories in the repository's root
@@ -371,11 +380,9 @@ var init = function () {
 
     // 绑定事件
     document.getElementById('updateToken').onclick = setToken;
-
     document.getElementById('updateOwner').onclick = setOwner;
-
     document.getElementById('updateRepo').onclick = setRepo;
-
+    document.getElementById('updateBranch').onclick = setBranch;
     document.getElementById('updateFilePath').onclick = setFilePath;
 
     document.getElementById('pullBtn').onclick = pullContent;
@@ -396,6 +403,7 @@ var init = function () {
     getToken();
     getOwner();
     getRepo();
+    getBranch();
     getFilePath();
 
     // 前置检查
