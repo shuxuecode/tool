@@ -71,6 +71,7 @@ var sha = undefined;
 var $token = undefined
 var $owner = undefined
 var $repo = undefined
+var $branch = ''
 var $filePath = undefined
 
 
@@ -102,12 +103,18 @@ var pullContent = function () {
     //         document.getElementById("content").value = contents;
     //     });
 
-    repo.contents($filePath).fetch()
+    $branch = $('#branch').val().trim()
+
+    repo.contents($filePath)
+        // .read({ref: $branch})
+        .fetch({ref: $branch})
         .then((info) => {
+            console.log(info)
             // console.log(info.sha, info.content)
             sha = info.sha
             showTitle("sha=" + sha)
             var contents = base64Decode(info.content)
+            // var contents = info
             document.getElementById("content").value = contents;
 
             toastr.info("pull成功")
@@ -129,7 +136,12 @@ var pushContent = function () {
         message: 'Updating file',
         content: base64Encode(text),
         sha: sha, // the blob SHA
-        // branch: 'gh-pages'
+        // branch: ''
+    }
+
+    $branch = $('#branch').val().trim()
+    if ($branch != '') {
+        config.branch = $branch
     }
 
     repo.contents($filePath).add(config)
@@ -164,6 +176,11 @@ var addFile = function () {
         content: base64Encode(text)
     }
 
+    $branch = $('#branch').val().trim()
+    if ($branch != '') {
+        config.branch = $branch
+    }
+
     repo.contents($filePath).add(config)
         .then((result) => {
             console.log('File add success. result is ', result)
@@ -183,6 +200,7 @@ var getFileList = function () {
     $token = document.getElementById('token').value
     $owner = document.getElementById('owner').value
     $repo = document.getElementById('repo').value
+    $branch = $('#branch').val().trim()
     $filePath = document.getElementById('filePath').value
 
     if ($token == '' || $owner == '' || $repo == '') {
@@ -194,8 +212,8 @@ var getFileList = function () {
     repo = octo.repos($owner, $repo)
 
     repo.contents('')
-        .read({ref: ''})
-        // .fetch()
+        // .read({ref: ''})
+        .fetch({ref: $branch})
         .then(contents => {
     // repo.contents($filePath).fetch().then(contents => {
         // 'contents' is an array of files and directories in the repository's root
@@ -235,7 +253,7 @@ function expandFile(e) {
 
     repo.contents(filePath)
         // .read({ref: ''})    
-        .fetch()
+        .fetch({ref: $branch}) 
         .then(contents => {
 
         var html = ''
@@ -276,7 +294,7 @@ function openFile(e) {
     // 更新路径
     $("#filePath").val(filePath)
 
-    repo.contents(filePath).fetch()
+    repo.contents(filePath).fetch({ref: $branch}) 
         .then((info) => {
             // console.log(info.sha, info.content)
             sha = info.sha
