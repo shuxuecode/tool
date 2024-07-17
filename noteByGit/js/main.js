@@ -194,35 +194,7 @@ var addFile = function () {
 }
 
 
-var deleteFile = function () {
-    
-    $filePath = document.getElementById('filePath').value
 
-    if (repo == undefined || $filePath == '') {
-        toastr.error("repo未配置")
-        return
-    }
-
-    var config = {
-        message: 'Deleting file',
-        sha: sha
-    }
-
-    $branch = $('#branch').val().trim()
-    if ($branch != '') {
-        config.branch = $branch
-    }
-
-    repo.contents($filePath).remove(config)
-        .then((result) => {
-            console.log('File Deleted. result is ', result)
-            toastr.info("删除成功")
-        })
-        .catch((error) => {
-            console.error('An error occurred while deleting the file', error);
-            toastr.error("删除失败")
-        });
-}
 
 
 var getFileList = function () {
