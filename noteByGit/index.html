@@ -41,8 +41,17 @@
         }
 
         textarea {
-            height: 90%;
-            width: 90%;
+            height: 96%;
+            width: 96%;
+        }
+
+        .preview {
+            width: 50%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid;
+            border-radius: 3px;
+            overflow: scroll;
         }
 
         #fileList {
@@ -65,7 +74,6 @@
             color: red;
             font-weight: 600;
         }
-
     </style>
 </head>
 
@@ -115,9 +123,14 @@
     </div>
 
 
-    <div style="height: 40%;">
+    <div style="height: 40%; display: flex;">
         <!-- <textarea id="content" rows="10" cols="150"></textarea> -->
-        <textarea id="content"></textarea>
+        <div style="width: 50%;">
+            <textarea id="content"></textarea>
+        </div>
+        <div class="preview" id="preview">
+            预览内容会显示在这里。
+        </div>
     </div>
 
     <div>
@@ -125,7 +138,7 @@
         <button id="pushBtn">push</button>
         <button id="addFileBtn">addFile</button>
         <button onclick="deleteFile()">deleteFile</button>
-        
+
     </div>
 
     <div>
@@ -141,15 +154,19 @@
     </div>
 
     <div>
-        
+
     </div>
 
     <!-- <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=UVgWJMK1D-VEVRYx-LTQ-VCk3a54XOGoJaKs3h5hru8"></script> -->
     <!-- <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=UVgWJMK1D-VEVRYx-LTQ-VCk3a54XOGoJaKs3h5hru8&cl=ffffff&w=a"></script> -->
-    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=330&t=n&d=UVgWJMK1D-VEVRYx-LTQ-VCk3a54XOGoJaKs3h5hru8&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script>
+    <script type='text/javascript' id='clustrmaps'
+        src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=330&t=n&d=UVgWJMK1D-VEVRYx-LTQ-VCk3a54XOGoJaKs3h5hru8&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script>
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/toastr.min.js"></script>
+
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.2/markdown-it.min.js"></script>
 
     <script type="text/javascript" src="js/octokat.js"></script>
 
@@ -159,6 +176,15 @@
 
     <script>
         toastr.options.positionClass = 'toast-top-center'
+
+        var md = window.markdownit();
+
+        document.getElementById('content').addEventListener('input', function () {
+            var content = this.value;
+            var result = md.render(content);
+            document.getElementById('preview').innerHTML = result;
+
+        }); 
     </script>
 </body>
 
