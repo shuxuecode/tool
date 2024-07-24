@@ -35,6 +35,19 @@ function getOwner() {
 // 
 function setRepo() {
     localStorage.setItem('my_github_repo', document.getElementById('repo').value);
+
+    $token = document.getElementById('token').value
+    $owner = document.getElementById('owner').value
+    $repo = document.getElementById('repo').value
+    
+    if ($token == '' || $owner == '' || $repo == '') {
+        toastr.error("配置为空")
+        return false
+    }
+
+    octo = new Octokat({ token: $token })
+    repo = octo.repos($owner, $repo)
+
     toastr.success("设置repo成功")
 }
 
