@@ -386,6 +386,16 @@ function chooseBranch(e) {
 }
 
 
+function renameFilePrompt() {
+    $filePath = document.getElementById('filePath').value
+    var newFileName = prompt("请输入新的文件名", $filePath)
+    if (newFileName != null) {
+        renameFile(newFileName);
+    }
+}
+
+
+
 var check = function () {
 
     if ($('#token').val().trim() === '') {
