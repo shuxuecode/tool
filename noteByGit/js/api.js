@@ -10,7 +10,7 @@ var createNewBranch = async function () {
 
     const defaultBranch = await getDefaultBranch()
 
-    
+
     repo.branches(defaultBranch).fetch()
         .then((branchInfo) => {
             baseBranchSHA = branchInfo.commit.sha; // 获取SHA
@@ -42,7 +42,7 @@ var createNewBranch = async function () {
 
 
 var deleteFile = function () {
-    
+
     $filePath = document.getElementById('filePath').value
 
     if (repo == undefined || $filePath == '') {
@@ -69,4 +69,11 @@ var deleteFile = function () {
             console.error('An error occurred while deleting the file', error);
             toastr.error("删除失败")
         });
+}
+
+
+// GitHub API 并不直接支持重命名文件。要重命名文件，通常的做法是创建一个新文件并删除旧文件
+
+var renameFile = function () {
+// todo 
 }
