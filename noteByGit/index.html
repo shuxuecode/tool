@@ -160,8 +160,8 @@
 
     <!-- <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=UVgWJMK1D-VEVRYx-LTQ-VCk3a54XOGoJaKs3h5hru8"></script> -->
     <!-- <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=UVgWJMK1D-VEVRYx-LTQ-VCk3a54XOGoJaKs3h5hru8&cl=ffffff&w=a"></script> -->
-    <script type='text/javascript' id='clustrmaps'
-        src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=330&t=n&d=UVgWJMK1D-VEVRYx-LTQ-VCk3a54XOGoJaKs3h5hru8&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script>
+    <!-- <script type='text/javascript' id='clustrmaps'
+        src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=330&t=n&d=UVgWJMK1D-VEVRYx-LTQ-VCk3a54XOGoJaKs3h5hru8&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script> -->
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/toastr.min.js"></script>
@@ -182,10 +182,15 @@
 
         document.getElementById('content').addEventListener('input', function () {
             var content = this.value;
+            // var result = md.render(content);
+            // document.getElementById('preview').innerHTML = result;
+            showPreview(content);
+        }); 
+
+        var showPreview = function(content) {
             var result = md.render(content);
             document.getElementById('preview').innerHTML = result;
-
-        }); 
+        }
     </script>
 </body>
 

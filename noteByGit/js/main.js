@@ -130,6 +130,9 @@ var pullContent = function () {
             // var contents = info
             document.getElementById("content").value = contents;
 
+            // 预览
+            showPreview(contents);
+
             toastr.info("pull成功")
         });
 }
@@ -316,6 +319,9 @@ function openFile(e) {
             showTitle("sha=" + sha)
             var contents = base64Decode(info.content)
             document.getElementById("content").value = contents;
+
+            // 预览
+            showPreview(contents);
 
             toastr.info("pull成功")
         });
