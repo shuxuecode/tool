@@ -41,8 +41,9 @@
         }
 
         textarea {
-            height: 96%;
-            width: 96%;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .preview {
@@ -118,15 +119,17 @@
         <label>filePath：</label>
         <input type="text" id="filePath" />
         <button id="updateFilePath">设置filePath</button>
-        <!-- <button id="showFilePath">获取filePath</button> -->
+        
         <button id="getFileBtn">获取文件列表</button>
         <button onclick="renameFilePrompt()">重命名文件</button>
+
+        <button id="switchPreview">预览</button>
     </div>
 
 
     <div style="height: 40%; display: flex;">
         <!-- <textarea id="content" rows="10" cols="150"></textarea> -->
-        <div style="width: 50%;">
+        <div style="width: 50%;" id="contentParent">
             <textarea id="content"></textarea>
         </div>
         <div class="preview" id="preview">

@@ -447,6 +447,17 @@ var init = function () {
         getBranchList()
     })
     
+    $('#switchPreview').on('click', function () {
+
+        const flag = $("#preview").css("display")
+        if (flag == "none") {
+            $("#contentParent").width("50%")
+            $("#preview").show()
+        } else {
+            $("#preview").hide()
+            $("#contentParent").width("90%")
+        }
+    })
 
     // 初始化内容
     getToken();
