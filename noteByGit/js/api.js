@@ -41,7 +41,7 @@ var createNewBranch = async function () {
 }
 
 
-var deleteFile = function () {
+var deleteFileFun = function () {
 
     $filePath = document.getElementById('filePath').value
 

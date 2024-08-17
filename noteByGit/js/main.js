@@ -401,6 +401,13 @@ function renameFilePrompt() {
 }
 
 
+function deleteFile() {
+    var confirm = window.confirm("确认删除文件?")
+    if (confirm) {
+        deleteFileFun();
+    }
+}
+
 
 var check = function () {
 
