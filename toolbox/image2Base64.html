@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>图片转Base64</title>
+    </head>
+    <body>
+        <h2>图片转Base64</h2>
+        
+        <input type="file" id="inputImage" />
+        <br />
+        <textarea id="output"></textarea>
+        <script>
+            const inputImage = document.getElementById('inputImage');
+            inputImage.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64 = e.target.result;
+                    console.log(base64); // 输出图片的Base64编码
+                    document.getElementById('output').value = base64;
+                };
+                reader.readAsDataURL(file);
+            });
+        </script>
+    </body>
+</html>
