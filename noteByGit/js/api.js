@@ -135,3 +135,27 @@ var renameFile = function (newFileName) {
 
         });
 }
+
+
+// 创建issue
+var createIssuesFun = function () {
+
+    if (repo == undefined) {
+        toastr.error("repo未配置")
+        return
+    }
+
+    repo.issues.create({
+        title: 'Issue 标题',
+        body: '这是 Issue 的详细描述。',
+      })
+      .then(response => {
+        console.log('Issue 创建成功:', response);
+        toastr.info("创建成功")
+      })
+      .catch(error => {
+        console.error('创建 Issue 时出错:', error);
+        toastr.error("创建失败")
+      });
+
+}
