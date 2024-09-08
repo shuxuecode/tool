@@ -444,6 +444,8 @@ var init = function () {
     document.getElementById('pullBtn').onclick = pullContent;
     document.getElementById('pushBtn').onclick = pushContent;
     document.getElementById('addFileBtn').onclick = addFile;
+
+    document.getElementById('createIssuesBtn').onclick = createIssuesFun;
     
 
     $('#getFileBtn').on('click', function () {

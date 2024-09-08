@@ -145,9 +145,15 @@ var createIssuesFun = function () {
         return
     }
 
+    var issues = document.getElementById("issueContent").value;
+    if (issues == '') {
+        toastr.error("issue内容为空")
+        return
+    }
+
     repo.issues.create({
         title: 'Issue 标题',
-        body: '这是 Issue 的详细描述。',
+        body: issues
       })
       .then(response => {
         console.log('Issue 创建成功:', response);
