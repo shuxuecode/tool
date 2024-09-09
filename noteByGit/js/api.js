@@ -151,8 +151,11 @@ var createIssuesFun = function () {
         return
     }
 
+    var title = document.getElementById("issueTitle").value;
+    title = title == '' ? "Issue 标题" : title;
+
     repo.issues.create({
-        title: 'Issue 标题',
+        title: title,
         body: issues
       })
       .then(response => {
