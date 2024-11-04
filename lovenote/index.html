@@ -7,6 +7,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
 
+    <link rel="stylesheet" href="js/trumbowyg/trumbowyg.min.css">
+
     <link rel="stylesheet" href="css/toastr.min.css">
     <style>
         body {
@@ -29,49 +31,10 @@
             text-align: center;
         }
 
-        .dirCls {
-            color: blue;
-            text-decoration: underline;
-        }
-
-        ._dir {
-            margin: 10px 8px 0px 30px;
-        }
-
         textarea {
             height: 100%;
             width: 100%;
             box-sizing: border-box;
-        }
-
-        .preview {
-            width: 50%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid;
-            border-radius: 3px;
-            overflow: scroll;
-        }
-
-        #fileList {
-            margin-left: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-
-        #fileList span {
-            margin-left: 12px;
-        }
-
-        #branchList {
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-
-        #branchList .branCls {
-            color: red;
-            font-weight: 600;
         }
 
         .toast-center-center {
@@ -86,7 +49,7 @@
 
 <body>
 
-    <h1>NOTE</h1>
+    <!-- <h1>NOTE</h1> -->
 
     <div style="display: flex; flex-direction: row;">
         <h2 id="h2id">toast</h2>
@@ -114,63 +77,19 @@
     </div>
 
     <div>
-        <label>branch：</label>
-        <input type="text" id="branch" />
-        <button id="updateBranch">设置branch</button>
-        <button id="getBranchBtn">获取分支列表</button>
-        <button onclick="createNewBranch()">创建新分支</button>
-    </div>
-
-    <div>
         <label>filePath：</label>
         <input type="text" id="filePath" />
         <button id="updateFilePath">设置filePath</button>
-        
-        <button id="getFileBtn">获取文件列表</button>
-        <button onclick="renameFilePrompt()">重命名文件</button>
-
-        <button id="switchPreview">预览</button>
     </div>
 
 
     <div style="height: 40%; display: flex;">
-        <div style="width: 90%;" id="contentParent">
-            <textarea id="content"></textarea>
-        </div>
+        <div id="content"></div>
     </div>
 
     <div>
         <button id="pullBtn">pull</button>
         <button id="pushBtn">push</button>
-        <button id="addFileBtn">addFile</button>
-        <button onclick="deleteFile()">deleteFile</button>
-
-    </div>
-
-    <div>
-        <div id="fileList">
-
-        </div>
-    </div>
-
-    <div>
-        <div id="branchList">
-
-        </div>
-    </div>
-
-    <div style="">
-        <div>
-            <label>issue标题：</label>
-            <input type="text" id="issueTitle" />
-        </div>
-        <div>
-            <label>issue内容：</label>
-            <textarea id="issueContent" style="height: 150px;"></textarea>
-        </div>
-    </div>
-    <div>
-        <button id="createIssuesBtn">createIssues</button>
     </div>
 
     <div style="text-align: center;">
@@ -182,6 +101,9 @@
 
     <script type="text/javascript" src="js/octokat.js"></script>
 
+    <script src="js/trumbowyg/trumbowyg.min.js"></script>
+    <script src="js/trumbowyg/zh_cn.min.js"></script>
+    
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
@@ -189,7 +111,13 @@
     <script>
         // toastr.options.positionClass = 'toast-top-center'
         toastr.options.positionClass = 'toast-center-center'
+
+        $('#content').trumbowyg({
+            lang: 'zh_cn'
+        });
     </script>
 </body>
 
 </html>
+
+
