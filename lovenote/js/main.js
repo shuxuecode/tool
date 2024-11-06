@@ -110,12 +110,6 @@ var pullContent = function () {
         return
     }
 
-    // repo.contents($filePath).read() // Use `.read` to get the raw file.
-    //     .then((contents) => {        // `.fetch` is used for getting JSON
-    //         console.log(contents)
-    //         document.getElementById("content").value = contents;
-    //     });
-
     $branch = $('#branch').val().trim()
 
     repo.contents($filePath)
@@ -173,160 +167,11 @@ var pushContent = function () {
 }
 
 
-var addFile = function () {
-    if (repo == undefined) {
-        toastr.error("repo未配置")
-        return
-    }
-
-    $filePath = document.getElementById('filePath').value
-    if ($filePath == '') {
-        toastr.error("文件路径未配置")
-        return
-    }
-
-    var text = document.getElementById("content").value
-
-    var config = {
-        message: 'add file', // commit信息
-        content: base64Encode(text)
-    }
-
-    $branch = $('#branch').val().trim()
-    if ($branch != '') {
-        config.branch = $branch
-    }
-
-    repo.contents($filePath).add(config)
-        .then((result) => {
-            console.log('File add success. result is ', result)
-
-            toastr.info("添加成功")
-            // 重新拉取
-            // pullContent()
-        }).catch(error => {
-            console.error("Failed to create file: ", error)
-        })
-}
 
 
 
 
 
-var getFileList = function () {
-
-    $token = document.getElementById('token').value
-    $owner = document.getElementById('owner').value
-    $repo = document.getElementById('repo').value
-    $branch = $('#branch').val().trim()
-    $filePath = document.getElementById('filePath').value
-
-    if ($token == '' || $owner == '' || $repo == '') {
-        toastr.error("配置为空")
-        return false
-    }
-
-    octo = new Octokat({ token: $token })
-    repo = octo.repos($owner, $repo)
-
-    repo.contents('')
-        // .read({ref: ''})
-        .fetch({ref: $branch})
-        .then(contents => {
-    // repo.contents($filePath).fetch().then(contents => {
-        // 'contents' is an array of files and directories in the repository's root
-        //   console.log(contents)
-        //   console.log(contents.items)
-
-        var html = ''
-
-        contents.items.forEach(file => {
-            console.log(`path: ${file.path}, type: ${file.type}`);
-
-            if (file.type == 'dir') {
-                html += '<div class="_dir">'
-                html += '<button onclick="expandFile(this)" style="color: blue;">展开</button>'
-                html += '<span class="dirCls"> ' + file.path + '</span> '
-                html += '</div> '
-            } else {
-                // html += '<div onclick="setNewFilePath(this)">' + file.path + '</div>'
-                html += '<div class="_dir">'
-                html += '<button onclick="openFile(this)">打开</button>'
-                html += '<span class="dirCls2"> ' + file.path + '</span> '
-                html += '</div> '
-            }
-
-        });
-
-        $('#fileList').html(html)
-    });
-}
-
-function expandFile(e) {
-    // console.info($(e))
-    // console.info($(e).next())
-    // 获取文件路径
-    // console.info($(e).next().text())
-    var filePath = $(e).next().text().trim()
-
-    repo.contents(filePath)
-        // .read({ref: ''})    
-        .fetch({ref: $branch}) 
-        .then(contents => {
-
-        var html = ''
-
-        contents.items.forEach(file => {
-            console.log(`path: ${file.path}, type: ${file.type}`);
-
-            if (file.type == 'dir') {
-                html += '<div class="_dir">'
-                html += '<button onclick="expandFile(this)" style="color: blue;">展开</button>'
-                html += '<span class="dirCls"> ' + file.path + '</span> '
-                html += '</div> '
-            } else {
-                // html += '<div onclick="setNewFilePath(this)">' + file.path + '</div>'
-                html += '<div class="_dir">'
-                html += '<button onclick="openFile(this)">打开</button>'
-                html += '<span class="dirCls2"> ' + file.path + '</span> '
-                html += '</div> '
-            }
-
-        });
-
-        // $(e).parent().after(html)
-        $(e).parent().append(html)
-    });
-    
-    // 禁用按钮
-    $(e).prop('disabled', true);
-    // 
-    $(e).css({'color':'lightgray'});
-}
-
-
-function openFile(e) {
-
-    var filePath = $(e).next().text().trim()
-
-    // 更新路径
-    $("#filePath").val(filePath)
-
-    repo.contents(filePath).fetch({ref: $branch}) 
-        .then((info) => {
-            // console.log(info.sha, info.content)
-            sha = info.sha
-            showTitle("sha=" + sha)
-            var contents = base64Decode(info.content)
-            document.getElementById("content").value = contents;
-
-            // 预览
-            showPreview(contents);
-
-            toastr.info("pull成功")
-        });
-
-}
 
 
 // 使用 .branches 方法来获取所有分支的信息
@@ -383,30 +228,6 @@ async function getDefaultBranch() {
 }
 
 
-function chooseBranch(e) {
-
-    var branch = $(e).next().text().trim()
-
-    // 更新分支
-    $("#branch").val(branch)
-}
-
-
-function renameFilePrompt() {
-    $filePath = document.getElementById('filePath').value
-    var newFileName = prompt("请输入新的文件名", $filePath)
-    if (newFileName != null) {
-        renameFile(newFileName);
-    }
-}
-
-
-function deleteFile() {
-    var confirm = window.confirm("确认删除文件?")
-    if (confirm) {
-        deleteFileFun();
-    }
-}
 
 
 var check = function () {
