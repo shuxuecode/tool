@@ -110,7 +110,7 @@ var pullContent = function () {
         return
     }
 
-    $branch = $('#branch').val().trim()
+    $branch = ''; // $('#branch').val().trim()
 
     repo.contents($filePath)
         // .read({ref: $branch})
@@ -149,10 +149,10 @@ var pushContent = function () {
         // branch: ''
     }
 
-    $branch = $('#branch').val().trim()
-    if ($branch != '') {
-        config.branch = $branch
-    }
+    // $branch = $('#branch').val().trim()
+    // if ($branch != '') {
+    //     config.branch = $branch
+    // }
 
     repo.contents($filePath).add(config)
         .then((info) => {
@@ -170,62 +170,6 @@ var pushContent = function () {
 
 
 
-
-
-
-
-// 使用 .branches 方法来获取所有分支的信息
-async function getBranchList() {
-
-    const defaultBranch = await getDefaultBranch()
-
-    // console.error(defaultBranch)
-
-    repo.branches.fetch()
-        .then(branches => {
-            
-            var html = ''
-
-            console.warn('branches', branches)
-            // `branches` 将是一个包含仓库所有分支信息的数组
-            branches.items.forEach(branch => {
-                // console.log(branch.name); // 打印分支名称
-
-                html += '<div class="">'
-                html += '<button onclick="chooseBranch(this)">使用该分支</button>'
-                if(defaultBranch === branch.name) {
-                    html += '<span class="branCls"> ' + branch.name + '</span> '
-                } else {
-                    html += '<span class=""> ' + branch.name + '</span> '
-                }
-                
-                html += '</div> '
-            });
-
-            $('#branchList').html(html)
-            // 
-        })
-        .catch(error => {
-            console.error('Error fetching branches: ', error);
-        });
-    
-}
-
-
-async function getDefaultBranch() {
-    return new Promise((resolve, reject) => {
-        // 这里进行异步操作
-        // 获取仓库信息
-        repo.fetch()
-            .then(repoInfo => {
-                console.log('默认分支=', repoInfo.defaultBranch); // 打印默认分支的名称
-                resolve(repoInfo.defaultBranch);
-            })
-            .catch(error => {
-                console.error('Error fetching repository information: ', error);
-            });
-      });
-}
 
 
 
