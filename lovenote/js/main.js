@@ -259,41 +259,15 @@ var init = function () {
     document.getElementById('updateToken').onclick = setToken;
     document.getElementById('updateOwner').onclick = setOwner;
     document.getElementById('updateRepo').onclick = setRepo;
-    document.getElementById('updateBranch').onclick = setBranch;
     document.getElementById('updateFilePath').onclick = setFilePath;
 
     document.getElementById('pullBtn').onclick = pullContent;
     document.getElementById('pushBtn').onclick = pushContent;
-    document.getElementById('addFileBtn').onclick = addFile;
-
-    document.getElementById('createIssuesBtn').onclick = createIssuesFun;
-    
-
-    $('#getFileBtn').on('click', function () {
-        getFileList()
-    })
-
-    $('#getBranchBtn').on('click', function () {
-        getBranchList()
-    })
-    
-    $('#switchPreview').on('click', function () {
-
-        const flag = $("#preview").css("display")
-        if (flag == "none") {
-            $("#contentParent").width("50%")
-            $("#preview").show()
-        } else {
-            $("#preview").hide()
-            $("#contentParent").width("90%")
-        }
-    })
 
     // 初始化内容
     getToken();
     getOwner();
     getRepo();
-    getBranch();
     getFilePath();
 
     // 前置检查
