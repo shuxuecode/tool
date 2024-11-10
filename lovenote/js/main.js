@@ -116,16 +116,15 @@ var pullContent = function () {
         // .read({ref: $branch})
         .fetch({ref: $branch})
         .then((info) => {
-            console.log(info)
+            console.log('info= ', info)
             // console.log(info.sha, info.content)
             sha = info.sha
             showTitle("sha=" + sha)
             var contents = base64Decode(info.content)
-            // var contents = info
-            document.getElementById("content").value = contents;
+            
+            // document.getElementById("content").value = contents;
 
-            // 预览
-            showPreview(contents);
+            $('#content').trumbowyg('html', contents);
 
             toastr.info("pull成功")
         });
@@ -140,7 +139,8 @@ var pushContent = function () {
         return
     }
 
-    var text = document.getElementById("content").value
+    // var text = document.getElementById("content").value
+    var text = $('#content').trumbowyg('html');
 
     var config = {
         message: 'Updating file',
