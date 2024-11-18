@@ -48,6 +48,33 @@
             height: 50px;
             width: 120px;
         }
+
+        .toggle-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.3s ease-out;
+            background-color: #f0f0f0;
+            padding: 0 16px;
+            box-sizing: border-box;
+        }
+
+        /* 当复选框被选中时调整内容高度 */
+        #toggle:checked+.toggle-button+.content {
+            max-height: 500px;
+            /* 根据内容的高度适当调整 */
+            padding: 16px;
+        }
     </style>
 </head>
 
@@ -55,13 +82,16 @@
 
     <!-- <h1>NOTE</h1> -->
 
-    <div style="display: flex; flex-direction: row;">
-        <h2 id="h2id">toast</h2>
+
+    <input type="checkbox" id="toggle" hidden>
+    <label for="toggle" class="toggle-button">Toggle</label>
+    <div class="content">
+        这里是需要展开和收起的内容。
     </div>
 
-    <h3 id="titleId">+</h3>
-
-
+    <div>
+        <div>设置</div>
+    </div>
     <div id="setting">
         <div>
             <label>token：</label>
@@ -88,6 +118,11 @@
         </div>
     </div>
 
+    <div style="display: flex; flex-direction: row;">
+        <h2 id="h2id">toast</h2>
+    </div>
+
+    <h3 id="titleId">+</h3>
 
     <div style="height: 60%; display: flex;">
         <div id="content"></div>
