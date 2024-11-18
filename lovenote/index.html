@@ -38,17 +38,16 @@
         }
 
         .toast-center-center {
-           top: 30%;
-           left: 50%;
-           margin-top: -30px;
-           margin-left: -150px;
+            top: 30%;
+            left: 50%;
+            margin-top: -30px;
+            margin-left: -150px;
         }
 
         .btn-cls button {
             height: 50px;
             width: 120px;
         }
-
     </style>
 </head>
 
@@ -62,7 +61,32 @@
 
     <h3 id="titleId">+</h3>
 
-    
+
+    <div id="setting">
+        <div>
+            <label>token：</label>
+            <input type="text" id="token" />
+            <button id="updateToken">设置token</button>
+        </div>
+
+        <div>
+            <label>owner：</label>
+            <input type="text" id="owner" />
+            <button id="updateOwner">设置owner</button>
+        </div>
+
+        <div>
+            <label>repo：</label>
+            <input type="text" id="repo" />
+            <button id="updateRepo">设置repo</button>
+        </div>
+
+        <div>
+            <label>filePath：</label>
+            <input type="text" id="filePath" />
+            <button id="updateFilePath">设置filePath</button>
+        </div>
+    </div>
 
 
     <div style="height: 60%; display: flex;">
@@ -75,30 +99,6 @@
     </div>
 
     <div>
-
-        <div>
-            <label>token：</label>
-            <input type="text" id="token" />
-            <button id="updateToken">设置token</button>
-        </div>
-    
-        <div>
-            <label>owner：</label>
-            <input type="text" id="owner" />
-            <button id="updateOwner">设置owner</button>
-        </div>
-    
-        <div>
-            <label>repo：</label>
-            <input type="text" id="repo" />
-            <button id="updateRepo">设置repo</button>
-        </div>
-    
-        <div>
-            <label>filePath：</label>
-            <input type="text" id="filePath" />
-            <button id="updateFilePath">设置filePath</button>
-        </div>
 
     </div>
 
@@ -113,7 +113,7 @@
 
     <script src="js/trumbowyg/trumbowyg.min.js"></script>
     <script src="js/trumbowyg/zh_cn.min.js"></script>
-    
+
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
@@ -129,5 +129,3 @@
 </body>
 
 </html>
-
-
