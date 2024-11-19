@@ -60,7 +60,7 @@
             margin-bottom: 10px;
         }
 
-        .content {
+        #setting {
             overflow: hidden;
             max-height: 0;
             transition: max-height 0.3s ease-out;
@@ -70,7 +70,7 @@
         }
 
         /* 当复选框被选中时调整内容高度 */
-        #toggle:checked+.toggle-button+.content {
+        #toggle:checked #setting {
             max-height: 500px;
             /* 根据内容的高度适当调整 */
             padding: 16px;
@@ -83,14 +83,16 @@
     <!-- <h1>NOTE</h1> -->
 
 
-    <input type="checkbox" id="toggle" hidden>
-    <label for="toggle" class="toggle-button">Toggle</label>
+
     <div class="content">
         这里是需要展开和收起的内容。
     </div>
 
     <div>
-        <div>设置</div>
+        <div>
+            <input type="checkbox" id="toggle" hidden>
+            <label for="toggle" class="toggle-button">设置</label>
+        </div>
     </div>
     <div id="setting">
         <div>
