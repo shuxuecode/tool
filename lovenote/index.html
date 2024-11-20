@@ -60,10 +60,10 @@
             box-sizing: border-box;
         }
 
-        /* 当复选框被选中时调整内容高度 */
+        
         #setting.open {
-            max-height: 150px;
             /* 根据内容的高度适当调整 */
+            max-height: 150px;
             padding: 16px;
         }
     </style>
@@ -71,20 +71,9 @@
 
 <body>
 
-    <!-- <h1>NOTE</h1> -->
-
-
-
-    <div class="content">
-        这里是需要展开和收起的内容。
-    </div>
-
     <div>
         <div>
-            <input type="checkbox" id="toggle" hidden>
-            <label for="toggle" class="toggle-button">设置</label>
-
-            <button onclick="toggle()">展开</button>
+            <button onclick="toggle()">设置</button>
         </div>
     </div>
     <div id="setting">
