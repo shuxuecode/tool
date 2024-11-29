@@ -1,15 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
 
 <head>
-    <title>note by github</title>
+    <title>todoList by github</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0" />
 
-    <link rel="stylesheet" href="js/trumbowyg/trumbowyg.min.css">
-
-    <link rel="stylesheet" href="css/toastr.min.css">
+    <link rel="stylesheet" href="css/toastr.min.css" />
     <style>
         body {
             width: 100%;
@@ -58,23 +56,72 @@
         #setting {
             overflow: hidden;
             max-height: 0;
-            transition: max-height 0.3s ease; /* ease-out */
+            transition: max-height 0.3s ease;
+            /* ease-out */
             background-color: #f0f0f0;
             padding: 0 16px;
             box-sizing: border-box;
         }
 
-        
         #setting.open {
             /* 根据内容的高度适当调整 */
             max-height: 150px;
             padding: 16px;
         }
+
+        /*  */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .list-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #dddddd;
+        }
+        .list-item:last-child {
+            border-bottom: none; /* 去掉最后一行的边框 */
+        }
+        .checkbox {
+            margin-right: 15px;
+            transform: scale(1.5);
+
+        }
+        .content {
+            flex-grow: 1;
+        }
+        .title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 0;
+        }
+        .description {
+            margin: 5px 0 0 0;
+            color: #666666;
+        }
+        .date {
+            font-size: 0.9em;
+            color: #999999;
+            margin-left: 20px;
+            white-space: nowrap;
+        }
     </style>
 </head>
 
 <body>
-
     <div class="header">
         <div>LOVE NOTE</div>
         <div>
@@ -107,13 +154,13 @@
         </div>
     </div>
 
-    <div style="display: flex; flex-direction: row;">
+    <div style="display: flex; flex-direction: row">
         <h2 id="h2id">toast</h2>
     </div>
 
     <h3 id="titleId">+</h3>
 
-    <div style="height: 60%; display: flex;">
+    <div style="height: 1%; display: flex">
         <div id="content"></div>
     </div>
 
@@ -124,9 +171,36 @@
 
     <div>
 
+        <div class="list-container">
+            <div class="list-item">
+                <input type="checkbox" class="checkbox">
+                <div class="content">
+                    <p class="title">Item 1 Title</p>
+                    <p class="description">This is the content of the first item.</p>
+                </div>
+                <div class="date">2023-10-01</div>
+            </div>
+            <div class="list-item">
+                <input type="checkbox" class="checkbox">
+                <div class="content">
+                    <p class="title">Item 2 Title</p>
+                    <p class="description">This is the content of the second item.</p>
+                </div>
+                <div class="date">2023-10-02</div>
+            </div>
+            <div class="list-item">
+                <input type="checkbox" class="checkbox">
+                <div class="content">
+                    <p class="title">Item 3 Title</p>
+                    <p class="description">This is the content of the third item.</p>
+                </div>
+                <div class="date">2023-10-03</div>
+            </div>
+        </div>
+
     </div>
 
-    <div style="text-align: center;">
+    <div style="text-align: center">
         <p>&copy; 2024 shuxuecode. All rights reserved.</p>
     </div>
 
@@ -135,31 +209,22 @@
 
     <script type="text/javascript" src="js/octokat.js"></script>
 
-    <script src="js/trumbowyg/trumbowyg.min.js"></script>
-    <script src="js/trumbowyg/zh_cn.min.js"></script>
-
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 
     <script>
         // toastr.options.positionClass = 'toast-top-center'
-        toastr.options.positionClass = 'toast-center-center'
-
-        $('#content').trumbowyg({
-            lang: 'zh_cn'
-        });
-
-
+        toastr.options.positionClass = "toast-center-center";
 
         function toggle() {
-            var setting = document.getElementById('setting');
+            var setting = document.getElementById("setting");
             // if (setting.classList.contains('open')) {
             //     setting.classList.remove('open');
             // } else {
-                
+
             // }
-            setting.classList.toggle('open');
+            setting.classList.toggle("open");
         }
     </script>
 </body>
