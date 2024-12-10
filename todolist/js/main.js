@@ -147,12 +147,15 @@ var init = function () {
     if (repo != undefined) {
         $('#h2id').html("repo加载成功")
         $('#h2id').css({ "color": "green" })
+
+        // 查询
+        query();
     }
 }
 
 
 init()
 
-query()
+
 
 // create('API创建标题', '内容')
