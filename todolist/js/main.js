@@ -1,40 +1,35 @@
 
 
-
-
-
-
-
 function setToken() {
-    localStorage.setItem('love_github_token', $("#token").val());
+    localStorage.setItem('todolist_github_token', $("#token").val());
     toastr.success("设置token成功")
 }
 
 function getToken() {
-    var token = localStorage.getItem('love_github_token');
+    var token = localStorage.getItem('todolist_github_token');
     $('#token').val(token)
 }
 
 function removeAll() {
-    localStorage.removeItem('love_github_token');
-    localStorage.removeItem('love_github_owner');
-    localStorage.removeItem('love_github_repo');
-    localStorage.removeItem('love_github_filepath');
+    localStorage.removeItem('todolist_github_token');
+    localStorage.removeItem('todolist_github_owner');
+    localStorage.removeItem('todolist_github_repo');
+    localStorage.removeItem('todolist_github_filepath');
 }
 
 // 
 function setOwner() {
-    localStorage.setItem('love_github_owner', document.getElementById('owner').value);
+    localStorage.setItem('todolist_github_owner', document.getElementById('owner').value);
     toastr.success("设置owner成功")
 }
 
 function getOwner() {
-    document.getElementById('owner').value = localStorage.getItem('love_github_owner');
+    document.getElementById('owner').value = localStorage.getItem('todolist_github_owner');
 }
 
 // 
 function setRepo() {
-    localStorage.setItem('love_github_repo', document.getElementById('repo').value);
+    localStorage.setItem('todolist_github_repo', document.getElementById('repo').value);
 
     $token = document.getElementById('token').value
     $owner = document.getElementById('owner').value
@@ -52,7 +47,7 @@ function setRepo() {
 }
 
 function getRepo() {
-    document.getElementById('repo').value = localStorage.getItem('love_github_repo');
+    document.getElementById('repo').value = localStorage.getItem('todolist_github_repo');
 }
 
 function setBranch() {
@@ -66,12 +61,12 @@ function getBranch() {
 
 // 
 function setFilePath() {
-    localStorage.setItem('love_github_filepath', document.getElementById('filePath').value);
+    localStorage.setItem('todolist_github_filepath', document.getElementById('filePath').value);
     toastr.success("设置filePath成功")
 }
 
 function getFilePath() {
-    document.getElementById('filePath').value = localStorage.getItem('love_github_filepath');
+    document.getElementById('filePath').value = localStorage.getItem('todolist_github_filepath');
 }
 
 
