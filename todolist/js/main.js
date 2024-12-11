@@ -1,4 +1,13 @@
 
+// 
+var octo = undefined
+var repo = undefined
+
+var $token = undefined
+var $owner = undefined
+var $repo = undefined
+
+
 // 基础配置
 function setToken() {
     localStorage.setItem('todolist_github_token', $("#token").val());
@@ -6,10 +15,8 @@ function setToken() {
 }
 
 function getToken() {
-    var token = localStorage.getItem('todolist_github_token');
-    $('#token').val(token)
+    $('#token').val(localStorage.getItem('todolist_github_token'))
 }
-
 
 // 
 function setOwner() {
@@ -49,20 +56,12 @@ function removeAll() {
     localStorage.removeItem('todolist_github_token');
     localStorage.removeItem('todolist_github_owner');
     localStorage.removeItem('todolist_github_repo');
-    localStorage.removeItem('todolist_github_filepath');
 }
 
 
-
-// 
-var octo = undefined
-var repo = undefined
-
-var $token = undefined
-var $owner = undefined
-var $repo = undefined
-
-
+/**
+ * 初始化repo
+ */
 var initRepo = function () {
     $token = document.getElementById('token').value
     $owner = document.getElementById('owner').value
@@ -78,6 +77,9 @@ var initRepo = function () {
 }
 
 
+/**
+ * 前置检查
+ */
 var check = function () {
 
     if ($('#token').val().trim() === '') {
@@ -101,15 +103,15 @@ var check = function () {
 }
 
 
+/**
+ * 初始化
+ */
 var init = function () {
 
     // 绑定事件
     document.getElementById('updateToken').onclick = setToken;
     document.getElementById('updateOwner').onclick = setOwner;
     document.getElementById('updateRepo').onclick = setRepo;
-
-    // document.getElementById('pullBtn').onclick = pullContent;
-    // document.getElementById('pushBtn').onclick = pushContent;
 
     // 初始化内容
     getToken();
