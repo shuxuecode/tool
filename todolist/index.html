@@ -73,7 +73,6 @@
 
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
             padding: 0;
             background-color: #f8f9fa;
         }
@@ -118,12 +117,19 @@
             margin-left: 20px;
             white-space: nowrap;
         }
+
+        .footer {
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
     <div class="header">
-        <div>LOVE NOTE</div>
+        <div>TODO LIST</div>
         <div>
             <button onclick="toggle()">设置</button>
         </div>
@@ -145,12 +151,6 @@
             <label>repo：</label>
             <input type="text" id="repo" />
             <button id="updateRepo">设置repo</button>
-        </div>
-
-        <div>
-            <label>filePath：</label>
-            <input type="text" id="filePath" />
-            <button id="updateFilePath">设置filePath</button>
         </div>
     </div>
 
@@ -200,7 +200,7 @@
 
     </div>
 
-    <div style="text-align: center">
+    <div class="footer" style="text-align: center">
         <p>&copy; 2024 shuxuecode. All rights reserved.</p>
     </div>
 
