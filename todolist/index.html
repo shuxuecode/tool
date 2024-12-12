@@ -11,7 +11,7 @@
     <style>
         body {
             width: 100%;
-            height: 100vh;
+            height: 95vh;
         }
 
         label {
@@ -42,6 +42,10 @@
             margin-left: -150px;
         }
 
+        .btn-cls {
+            height: 5vh;
+        }
+
         .btn-cls button {
             height: 50px;
             width: 120px;
@@ -51,6 +55,17 @@
             display: flex;
             justify-content: space-between;
             padding: 10px 5%;
+            height: 5vh;
+        }
+
+        .prompt {
+            height: 10vh;
+        }
+
+        .settings {
+            position: absolute;
+            width: 100%;
+            display: inline-block;
         }
 
         #setting {
@@ -76,6 +91,12 @@
             padding: 0;
             background-color: #f8f9fa;
         }
+
+        .list-cls {
+            height: 70vh;
+            overflow: auto;
+        }
+
         .list-container {
             max-width: 600px;
             margin: 0 auto;
@@ -123,6 +144,7 @@
             position: absolute;
             bottom: 0;
             width: 100%;
+            height: 5vh;
         }
     </style>
 </head>
@@ -134,7 +156,7 @@
             <button onclick="toggle()">设置</button>
         </div>
     </div>
-    <div id="setting">
+    <div id="setting" class="settings">
         <div>
             <label>token：</label>
             <input type="text" id="token" />
@@ -154,23 +176,18 @@
         </div>
     </div>
 
-    <div style="display: flex; flex-direction: row">
+    <div class="prompt" style="display: flex; flex-direction: row">
         <h2 id="h2id">toast</h2>
     </div>
 
-    <h3 id="titleId">+</h3>
-
-    <div style="height: 1%; display: flex">
-        <div id="content"></div>
-    </div>
+    <!-- <h3 id="titleId">+</h3> -->
 
     <div class="btn-cls">
         <button id="pullBtn">pull</button>
         <button id="pushBtn">push</button>
     </div>
 
-    <div>
-
+    <div class="list-cls">
         <div class="list-container">
             <div class="list-item">
                 <input type="checkbox" class="checkbox">
