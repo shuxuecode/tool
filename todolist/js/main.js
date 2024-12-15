@@ -112,6 +112,10 @@ var init = function () {
     document.getElementById('updateToken').onclick = setToken;
     document.getElementById('updateOwner').onclick = setOwner;
     document.getElementById('updateRepo').onclick = setRepo;
+    
+    document.getElementById('addBtn').onclick = setRepo;
+
+    
 
     // 初始化内容
     getToken();
