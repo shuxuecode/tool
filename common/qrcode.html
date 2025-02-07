@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>生成二维码</title>
+</head>
+
+<body>
+    <h1>生成二维码</h1>
+
+    <label for="text-input">请输入文字:</label>
+    <input type="text" id="text-input" placeholder="在此输入文字...">
+    <button onclick="generateQRCode()">生成二维码</button>
+
+    <div id="qr-code-container"></div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script>
+        function generateQRCode() {
+            const text = document.getElementById('text-input').value;
+            if (text) {
+                QRCode.toCanvas(text, { errorCorrectionLevel: 'H' }, function(err, canvas) {
+                    if (err) throw err;
+
+                    document.getElementById("qr-code-container").appendChild(canvas);
+                });
+            } else {
+                alert("请输入文字！");
+            }
+        }
+    </script>
+</body>
+</html>
