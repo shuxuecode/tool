@@ -49,6 +49,12 @@ function query() {
   }
   
   
+  function add() {
+
+    // todo 
+    create('', '')
+
+  }
   
   function create(title, issues) {
     repo.issues.create({
