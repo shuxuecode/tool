@@ -117,6 +117,8 @@ var init = function () {
         modal.style.display = "block";
     }
 
+    document.getElementById('createBtn').onclick = add;
+
     
 
     // 初始化内容

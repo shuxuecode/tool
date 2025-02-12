@@ -51,8 +51,11 @@ function query() {
   
   function add() {
 
+    const title = document.getElementById('add_title').value
+    const issues = document.getElementById('add_content').value
+
     // todo 
-    create('', '')
+    create(title, issues)
 
   }
   
