@@ -11,6 +11,9 @@ function query() {
         console.log('res : ', JSON.stringify(res));
         // console.log(res.items);
   
+        // 清空已有数据
+        $('.list-container').html('');
+
         res.items.forEach(issue => {
           console.log('--------------------------------------------------------------');
           console.log(issue.number);
@@ -66,6 +69,10 @@ function query() {
     })
       .then(response => {
         console.log('Issue 创建成功:', response);
+
+        // 重新加载数据
+        query();
+
       })
       .catch(error => {
         console.error('创建 Issue 时出错:', error);
