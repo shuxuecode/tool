@@ -1,9 +1,11 @@
 
+const per_page = 5;
+
 
 function query() {
   repo.issues.fetch({
     state: 'all', // 拉取打开的 issue，可以设置为 'closed' 或 'all' open
-    per_page: 5,  // 每页的 issue 数量，可以根据需要调整
+    per_page: per_page,  // 每页的 issue 数量，可以根据需要调整
     sort: 'created',   // 按创建时间排序
     direction: 'desc'  // 按降序排序
   })
@@ -29,6 +31,10 @@ function query() {
 
       });
 
+      if (res.items.length === per_page) {
+        queryPage(2);
+      }
+
     })
     .catch(error => {
       console.error('Error fetching issues: ', error);
@@ -39,7 +45,7 @@ function query() {
 function queryPage(page) {
   repo.issues.fetch({
     state: 'all', // 拉取打开的 issue，可以设置为 'closed' 或 'all' open
-    per_page: 5,  // 每页的 issue 数量，可以根据需要调整
+    per_page: per_page,  // 每页的 issue 数量，可以根据需要调整
     sort: 'created',   // 按创建时间排序
     direction: 'desc',  // 按降序排序
     page: page
@@ -47,8 +53,6 @@ function queryPage(page) {
     .then(res => {
       console.log('res : ', JSON.stringify(res));
       // console.log(res.items);
-      // 清空已有数据
-      $('.list-container').html('');
       res.items.forEach(issue => {
         console.log('--------------------------------------------------------------');
         console.log(issue.number);
@@ -57,8 +61,14 @@ function queryPage(page) {
         console.log(issue.state);
         console.log(issue.updatedAt);
         console.log(new Date(new Date(issue.updatedAt).getTime() + 8 * 3600 * 1000));
+
         show(issue)
       });
+
+      if (res.items.length === per_page) {
+        queryPage(page + 1);
+      }
+
     })
     .catch(error => {
       console.error('Error fetching issues: ', error);
