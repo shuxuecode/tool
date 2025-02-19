@@ -1,5 +1,11 @@
 
+
+// 每页条数
 const per_page = 5;
+
+// TODO  查询到几页后便不再自动查询
+
+//  TODO 新增成功后，直接把数据插入第一条，而不是刷新整个数据
 
 
 function query() {
