@@ -2,6 +2,8 @@
 
 // 每页条数
 const per_page = 5;
+// 最大页数
+const maxPage = 4;
 
 // TODO  查询到几页后便不再自动查询
 
@@ -71,7 +73,7 @@ function queryPage(page) {
         show(issue)
       });
 
-      if (res.items.length === per_page) {
+      if (res.items.length === per_page && page + 1 <= maxPage) {
         queryPage(page + 1);
       }
 
