@@ -34,11 +34,6 @@ function base64Decode(base64EncodedString) {
 }
 
 
-var showTitle = function (msg) {
-    document.getElementById("titleId").innerHTML = msg;
-}
-
-
 function base64Encode(input) {
     return window.btoa(unescape(encodeURIComponent(input)));
 }
