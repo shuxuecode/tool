@@ -61,6 +61,7 @@
             <a href="#" class="tip save" title="保存"  data-placement="bottom"><i class="fa fa-download"></i></a>
             <a href="#" class="tip copy" title="复制" data-clipboard-target="#json-target"  data-placement="bottom"><i class="fa fa-copy"></i></a>
             <a href="#" class="tip compress" title="折叠"  data-placement="bottom"><i class="fa fa-compress"></i></a>
+            <a href="#" class="tip unescape" title="去除转义"  data-placement="bottom"><i class="fa fa-eraser"></i></a>
         </div>
         <div id="right-box"  style="height:800px;border-right:solid 1px #ddd;border-bottom:solid 1px #ddd;border-radius:0;resize: none;overflow-y:scroll; outline:none;position:relative;">
             <div id="line-num" style="background-color:#fafafa;padding:0px 8px;float:left;border-right:dashed 1px #eee;display:none;z-index:-1;color:#999;position:absolute;text-align:center;over-flow:hidden;">
@@ -202,6 +203,22 @@ $('.compress').click(function(){
 $('.clear').click(function(){
      $('#json-src').val('');
      $('#json-target').html('');
+});
+$('.unescape').click(function(){
+    var content = $('#json-src').val();
+    if ($.trim(content) === '') {
+        return false;
+    }
+    var result = content;
+    try{
+        // 将整段内容视为 JSON 字符串字面量解析，一次性处理 \" \\ \/ \n \t \uXXXX 等转义
+        result = JSON.parse('"' + content.replace(/[\r\n]/g, '') + '"');
+    }catch(e){
+        // 兜底：仅去除引号和斜杠转义
+        result = content.replace(/\\"/g, '"').replace(/\\\//g, '/');
+    }
+    $('#json-src').val(result);
+    $('#json-src').keyup();
 });
 (function($){
    $.fn.innerText = function(msg) {

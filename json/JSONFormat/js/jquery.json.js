@@ -48,6 +48,10 @@ var JSONFormat = (function(){
     }
 
     function _format_string(object){
+        // 用 JSON.stringify 恢复转义字符的原始形式（如 " → \"）
+        // 否则内部包含引号的字符串值在展示时会破坏 JSON 结构
+        var escaped = JSON.stringify(object);
+        object = escaped.substring(1, escaped.length - 1);
         object = object.replace(/\</g,"&lt;");
         object = object.replace(/\>/g,"&gt;");
         if(0 <= object.search(/^http/)){
