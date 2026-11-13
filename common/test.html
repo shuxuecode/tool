@@ -1,0 +1,30 @@
+<html>
+
+<script> 
+    $=(...n)=>document.currentScript.replaceWith(...n)
+</script>
+
+<body>      
+
+
+
+    The year is <script>$(new Date().getFullYear())</script>
+
+    <div></div>
+
+<textarea readonly cols="100" rows="30">
+    利用 document.currentScript 进行内联渲染。Lean Rada 介绍了一种巧妙的技巧，它利用了document.currentScript属性。你可以使用它来插入一个微小的内联<script>元素，该元素会在页面加载时自动替换自身：
+
+The year is <script>
+document.currentScript.replaceWith(
+  new Date().getFullYear())</script>
+如果您像这样定义一个快捷函数：
+
+$=(...n)=>document.currentScript.replaceWith(...n)
+你会得到一种非常精简的模板语言：
+
+The year is <script>$(new Date().getFullYear())</script>
+</textarea>
+
+</body>
+</html>

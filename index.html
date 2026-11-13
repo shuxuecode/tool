@@ -1,85 +1,942 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf8" />
-        <title>工具箱</title>
-        <!-- <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.1/css/bootstrap.min.css" rel="stylesheet"> -->
-        <link href="./json/JSONFormat/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
-    </head>
-    <body>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>工具箱</title>
+  <link href="favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <style>
+    :root {
+      color-scheme: light;
+      --page-bg: #f4f7fb;
+      --panel-bg: #ffffff;
+      --panel-border: rgba(23, 43, 77, 0.1);
+      --text-primary: #172b4d;
+      --text-secondary: #617182;
+      --accent: #2f61bf;
+      --accent-strong: #254f9f;
+      --accent-soft: rgba(47, 97, 191, 0.1);
+      --hover-bg: #eef3fb;
+      --active-bg: #e3ecfa;
+      --shadow: 0 16px 40px rgba(23, 43, 77, 0.1);
+      --input-bg: #ffffff;
+    }
 
-        <div>
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --page-bg: #101724;
+      --panel-bg: #1a2432;
+      --panel-border: rgba(255, 255, 255, 0.1);
+      --text-primary: #edf2f7;
+      --text-secondary: #a6b4c7;
+      --accent: #8fb6ff;
+      --accent-strong: #a8c7ff;
+      --accent-soft: rgba(143, 182, 255, 0.16);
+      --hover-bg: #223044;
+      --active-bg: #273a53;
+      --shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+      --input-bg: #151d29;
+    }
 
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">JSON格式化</a></li>
-              <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-              <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">时间戳转换</a></li>
-              <li role="presentation"><a href="#note" aria-controls="note" role="tab" data-toggle="tab">note</a></li>
-              <li role="presentation"><a href="#lovenote" aria-controls="lovenote" role="tab" data-toggle="tab">lovenote</a></li>
-              <li role="presentation"><a href="#todolist" aria-controls="todolist" role="tab" data-toggle="tab">todolist</a></li>
-              <li role="presentation"><a href="#Image2Base64" aria-controls="Image2Base64" role="tab" data-toggle="tab">Image2Base64</a></li>
-              <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-            </ul>
-          
-            <!-- Tab panes -->
-            <div class="tab-content">
-              <div role="tabpanel" class="tab-pane active" id="home">
-                <iframe src="./json/JSONFormat/index.html" width="100%">
+    * {
+      box-sizing: border-box;
+    }
 
-                </iframe>
-              </div>
-              <div role="tabpanel" class="tab-pane" id="profile">
-                <iframe src="./json/jsonformat.html" width="100%">
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text-primary);
+      background: var(--page-bg);
+    }
 
-                </iframe>
-              </div>
-              <div role="tabpanel" class="tab-pane" id="messages">
-                <iframe src="./toolbox/timestamp.html" width="100%">
+    button {
+      font: inherit;
+    }
 
-                </iframe>
-              </div>
+    .sidebar {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      width: 308px;
+      flex: 0 0 308px;
+      min-height: 0;
+      border-right: 1px solid var(--panel-border);
+      background: var(--panel-bg);
+      box-shadow: var(--shadow);
+      transition: width 0.22s ease, flex-basis 0.22s ease;
+    }
 
-              <div role="tabpanel" class="tab-pane" id="note">
-                <iframe src="./noteByGit/index.html" width="100%">
-                </iframe>
-              </div>
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 22px 20px 18px;
+    }
 
-              <div role="tabpanel" class="tab-pane" id="lovenote">
-                <iframe src="./lovenote/index.html" width="100%">
-                </iframe>
-              </div>
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
 
-              <div role="tabpanel" class="tab-pane" id="todolist">
-                <iframe src="./todolist/index.html" width="100%">
-                </iframe>
-              </div>
-              
-              <div role="tabpanel" class="tab-pane" id="Image2Base64">
-                <iframe src="./toolbox/image2Base64.html" width="100%">
-                </iframe>
-              </div>
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      border-radius: 13px;
+      overflow: hidden;
+      background: #eaeeef;
+      box-shadow: 0 8px 18px rgba(23, 43, 77, 0.16);
+    }
 
-              <div role="tabpanel" class="tab-pane" id="settings">...</div>
-            </div>
-          
-          </div>
+    .brand-mark img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
 
-          <script src="./json/js/jquery.min.js"></script>
-          <script src="./json/JSONFormat/js/bootstrap.min.js"></script>
-          <!-- <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.1/js/bootstrap.min.js"></script>       -->
+    .brand-text {
+      min-width: 0;
+      transition: opacity 0.16s ease;
+    }
 
-          <script>
-            $(function(){
-                setIframeHeight()
-                setTimeout(setIframeHeight, 1000)
-            });
+    .brand-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.25;
+    }
 
-            setIframeHeight = function(){
-                $('iframe').height(window.outerHeight)
-            }
+    .brand-subtitle {
+      margin: 2px 0 0;
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
 
-          </script>
-    </body>
+    .icon-button {
+      display: inline-grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+
+    .icon-button:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      transform: translateY(-1px);
+    }
+
+    .sidebar-toggle {
+      display: none;
+    }
+
+    .sidebar-collapse {
+      flex: 0 0 auto;
+    }
+
+    .sidebar-search {
+      position: relative;
+      padding: 0 18px 16px;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-box::before {
+      content: "搜索";
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 13px;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px 0 52px;
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      background: var(--input-bg);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      width: 30px;
+      height: 30px;
+      transform: translateY(-50%);
+      border: 0;
+      border-radius: 9px;
+      color: var(--text-secondary);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .search-clear:hover {
+      color: var(--text-primary);
+      background: var(--accent-soft);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      min-height: 0;
+      padding: 4px 12px 18px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    .nav-group {
+      margin-top: 12px;
+    }
+
+    .nav-group-heading {
+      margin: 0;
+      padding: 12px 10px 8px;
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-item {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 11px;
+      align-items: center;
+      width: 100%;
+      padding: 10px;
+      border: 0;
+      border-radius: 12px;
+      color: var(--text-primary);
+      text-align: left;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .nav-item:hover {
+      background: var(--hover-bg);
+    }
+
+    .nav-item.active {
+      background: var(--active-bg);
+      color: var(--accent-strong);
+    }
+
+    .sidebar.collapsed {
+      width: 84px;
+      flex-basis: 84px;
+    }
+
+    .sidebar.collapsed .sidebar-header {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 0 14px;
+    }
+
+    .sidebar.collapsed .brand {
+      justify-content: center;
+      width: 100%;
+    }
+
+    .sidebar.collapsed .brand-text,
+    .sidebar.collapsed .sidebar-search,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .footer {
+      display: none;
+    }
+
+    .sidebar.collapsed .sidebar-search-area {
+      display: none;
+    }
+
+    .sidebar.collapsed .sidebar-nav {
+      padding: 4px 14px 14px;
+    }
+
+    .sidebar.collapsed .nav-group-heading {
+      height: 1px;
+      margin: 18px 8px 8px;
+      padding: 0;
+      font-size: 0;
+      background: var(--panel-border);
+    }
+
+    .sidebar.collapsed .nav-item {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      padding: 8px;
+    }
+
+    .nav-icon {
+      display: grid;
+      place-items: center;
+      height: 36px;
+      border-radius: 10px;
+      font-size: 16px;
+      background: var(--accent-soft);
+    }
+
+    .nav-text {
+      min-width: 0;
+    }
+
+    .nav-title {
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 650;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nav-description {
+      overflow: hidden;
+      color: var(--text-secondary);
+      font-size: 12px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nav-empty {
+      display: none;
+      padding: 30px 14px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .nav-empty.visible {
+      display: block;
+    }
+
+    .workspace {
+      display: flex;
+      flex: 1;
+      min-width: 0;
+      min-height: 0;
+      flex-direction: column;
+      background: var(--page-bg);
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 82px;
+      padding: 16px 26px;
+      border-bottom: 1px solid var(--panel-border);
+      background: var(--panel-bg);
+    }
+
+    .workspace-title-group {
+      min-width: 0;
+    }
+
+    .workspace-title {
+      margin: 0;
+      overflow: hidden;
+      font-size: 21px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .workspace-subtitle {
+      margin: 4px 0 0;
+      overflow: hidden;
+      color: var(--text-secondary);
+      font-size: 13px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .workspace-actions {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 10px;
+    }
+
+    .action-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 40px;
+      padding: 0 15px;
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      color: var(--text-primary);
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+
+    .action-button:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      transform: translateY(-1px);
+    }
+
+    .workspace-body {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .tool-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: var(--panel-bg);
+    }
+
+    .sidebar-backdrop {
+      display: none;
+    }
+
+    .footer {
+      padding: 12px 18px;
+      border-top: 1px solid var(--panel-border);
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    .footer-link {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 880px) {
+      body {
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: min(86vw, 320px);
+        transform: translateX(-105%);
+        transition: transform 0.24s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-toggle {
+        display: inline-grid;
+      }
+
+      .sidebar-collapse {
+        display: none !important;
+      }
+
+      .sidebar.collapsed {
+        width: min(86vw, 320px);
+        flex-basis: min(86vw, 320px);
+      }
+
+      .sidebar.collapsed .sidebar-header {
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+        justify-content: space-between;
+        padding: 22px 20px 18px;
+      }
+
+      .sidebar.collapsed .brand {
+        width: auto;
+      }
+
+      .sidebar.collapsed .brand-text,
+      .sidebar.collapsed .sidebar-search,
+      .sidebar.collapsed .nav-text,
+      .sidebar.collapsed .footer {
+        display: revert;
+      }
+
+      .sidebar.collapsed .sidebar-search-area {
+        display: block;
+        padding: 0 18px 16px;
+      }
+
+      .sidebar.collapsed .sidebar-nav {
+        padding: 4px 12px 18px;
+      }
+
+      .sidebar.collapsed .nav-group-heading {
+        height: auto;
+        margin: 0;
+        padding: 12px 10px 8px;
+        font-size: 11px;
+        background: transparent;
+      }
+
+      .sidebar.collapsed .nav-item {
+        grid-template-columns: 36px minmax(0, 1fr);
+        justify-items: start;
+        padding: 10px;
+      }
+
+      .sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 15;
+        display: none;
+        background: rgba(10, 17, 28, 0.5);
+      }
+
+      .sidebar-backdrop.visible {
+        display: block;
+      }
+
+      .workspace-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      .workspace-title-group {
+        width: 100%;
+      }
+
+      .workspace-title {
+        font-size: 18px;
+      }
+
+      .workspace-subtitle {
+        display: none;
+      }
+
+      .workspace-actions .action-label {
+        display: none;
+      }
+
+      .workspace-actions {
+        justify-content: flex-end;
+        width: 100%;
+        gap: 8px;
+      }
+
+      .action-button {
+        padding: 0 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar" id="sidebar" aria-label="工具导航">
+    <header class="sidebar-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <img src="./assets/toolbox-icon.svg" alt="">
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">个人工具箱</div>
+          <div class="brand-subtitle">单页切换常用工具</div>
+        </div>
+      </div>
+      <button class="icon-button sidebar-collapse" id="sidebarCollapse" type="button" aria-label="折叠侧边栏" aria-expanded="true">«</button>
+      <button class="icon-button sidebar-toggle" id="sidebarClose" type="button" aria-label="关闭导航">✕</button>
+    </header>
+
+    <div class="sidebar-search-area">
+      <div class="sidebar-search">
+        <div class="search-box">
+          <input class="search-input" id="toolSearch" type="search" placeholder="搜索工具" aria-label="搜索工具">
+          <button class="search-clear" id="searchClear" type="button" aria-label="清空搜索">×</button>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebarNav" aria-live="polite"></nav>
+
+    <footer class="footer">
+      © <span id="currentYear"></span> shuxuecode
+    </footer>
+  </aside>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <main class="workspace">
+    <header class="workspace-header">
+      <div class="workspace-title-group">
+        <h1 class="workspace-title" id="workspaceTitle">正在加载</h1>
+        <p class="workspace-subtitle" id="workspaceSubtitle">请选择左侧工具</p>
+      </div>
+      <div class="workspace-actions">
+        <button class="icon-button sidebar-toggle" id="sidebarOpen" type="button" aria-label="打开导航">☰</button>
+        <button class="action-button" id="reloadTool" type="button">↻<span class="action-label">重载</span></button>
+        <button class="action-button" id="openNewWindow" type="button">↗<span class="action-label">新窗口</span></button>
+        <button class="icon-button" id="themeToggle" type="button" aria-label="切换主题">☾</button>
+      </div>
+    </header>
+
+    <section class="workspace-body">
+      <iframe class="tool-frame" id="toolFrame" title="工具内容"></iframe>
+    </section>
+  </main>
+
+  <script>
+    const tools = [
+      {
+        id: 'json',
+        name: 'JSON 格式化',
+        description: '校验、格式化、压缩与 XML 互转',
+        path: './json/JSONFormat/index.html',
+        category: 'development',
+        groupName: '开发工具',
+        icon: '{"',
+        keywords: 'json xml format validate formatter pretty compress'
+      },
+      {
+        id: 'json-light',
+        name: 'JSON 快速格式化',
+        description: '轻量版 JSON 解析与格式化',
+        path: './json/jsonformat.html',
+        category: 'development',
+        groupName: '开发工具',
+        icon: '{ }',
+        keywords: 'json format validate lightweight simple'
+      },
+      {
+        id: 'timestamp',
+        name: '时间戳转换',
+        description: '时间戳、日期与时间差计算',
+        path: './toolbox/timestamp.html',
+        category: 'development',
+        groupName: '开发工具',
+        icon: '⏱',
+        keywords: 'timestamp date time convert difference 日期 时间戳'
+      },
+      {
+        id: 'mermaid',
+        name: 'Mermaid 编辑器',
+        description: '实时渲染流程图与时序图',
+        path: './common/mermaid-editor.html',
+        category: 'development',
+        groupName: '开发工具',
+        icon: '▦',
+        keywords: 'mermaid diagram flow chart sequence 渲染 图表'
+      },
+      {
+        id: 'github-note',
+        name: 'GitHub 笔记',
+        description: '文件、分支、Issue 与 Markdown',
+        path: './noteByGit/index.html',
+        category: 'notes',
+        groupName: '笔记与待办',
+        icon: '✎',
+        keywords: 'github note markdown branch file issue 笔记 分支'
+      },
+      {
+        id: 'love-note',
+        name: '一封情书',
+        description: '富文本编辑并保存到 GitHub',
+        path: './lovenote/index.html',
+        category: 'notes',
+        groupName: '笔记与待办',
+        icon: '💌',
+        keywords: 'love note rich text trumbowyg github 情书 富文本'
+      },
+      {
+        id: 'todo',
+        name: 'GitHub 待办',
+        description: '使用 Issues 管理待办任务',
+        path: './todolist/index.html',
+        category: 'notes',
+        groupName: '笔记与待办',
+        icon: '✓',
+        keywords: 'todo github issues task list 待办 任务'
+      },
+      {
+        id: 'image-base64',
+        name: '图片转 Base64',
+        description: '本地图片转 Data URL',
+        path: './toolbox/image2Base64.html',
+        category: 'conversion',
+        groupName: '转换与文本',
+        icon: '🖼',
+        keywords: 'image base64 file data url 图片 转换'
+      },
+      {
+        id: 'qrcode',
+        name: '二维码工具',
+        description: '生成二维码并解析图片二维码',
+        path: './common/qrcode.html',
+        category: 'conversion',
+        groupName: '转换与文本',
+        icon: '▣',
+        keywords: 'qrcode 二维码 生成 解码 解析 识别'
+      },
+      {
+        id: 'char-counter',
+        name: '字数统计',
+        description: '字符、汉字与英文单词统计',
+        path: './common/char-counter.html',
+        category: 'conversion',
+        groupName: '转换与文本',
+        icon: '字',
+        keywords: 'text count word chinese character 字数 统计'
+      }
+    ];
+
+    const categoryOrder = ['development', 'notes', 'conversion'];
+    const sidebar = document.getElementById('sidebar');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const sidebarOpen = document.getElementById('sidebarOpen');
+    const sidebarCollapse = document.getElementById('sidebarCollapse');
+    const sidebarNav = document.getElementById('sidebarNav');
+    const toolSearch = document.getElementById('toolSearch');
+    const searchClear = document.getElementById('searchClear');
+    const workspaceTitle = document.getElementById('workspaceTitle');
+    const workspaceSubtitle = document.getElementById('workspaceSubtitle');
+    const toolFrame = document.getElementById('toolFrame');
+    const reloadTool = document.getElementById('reloadTool');
+    const openNewWindow = document.getElementById('openNewWindow');
+    const themeToggle = document.getElementById('themeToggle');
+    const currentYear = document.getElementById('currentYear');
+    let activeTool = tools[0];
+
+    currentYear.textContent = new Date().getFullYear();
+
+    function setTheme(theme) {
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem('toolbox-theme', theme);
+      themeToggle.textContent = theme === 'dark' ? '☀' : '☾';
+      themeToggle.setAttribute('aria-label', theme === 'dark' ? '切换到浅色主题' : '切换到深色主题');
+    }
+
+    function renderSidebar() {
+      sidebarNav.innerHTML = '';
+
+      categoryOrder.forEach(category => {
+        const group = document.createElement('section');
+        group.className = 'nav-group';
+        group.dataset.category = category;
+
+        const groupHeading = document.createElement('h2');
+        groupHeading.className = 'nav-group-heading';
+        groupHeading.textContent = tools.find(tool => tool.category === category).groupName;
+        group.appendChild(groupHeading);
+
+        tools.filter(tool => tool.category === category).forEach(tool => {
+          const navItem = document.createElement('button');
+          navItem.className = 'nav-item';
+          navItem.type = 'button';
+          navItem.dataset.toolId = tool.id;
+          navItem.dataset.keywords = tool.keywords;
+          navItem.title = tool.name;
+
+          const navIcon = document.createElement('span');
+          navIcon.className = 'nav-icon';
+          navIcon.setAttribute('aria-hidden', 'true');
+          navIcon.textContent = tool.icon;
+
+          const navText = document.createElement('span');
+          navText.className = 'nav-text';
+
+          const navTitle = document.createElement('span');
+          navTitle.className = 'nav-title';
+          navTitle.textContent = tool.name;
+
+          const navDescription = document.createElement('span');
+          navDescription.className = 'nav-description';
+          navDescription.textContent = tool.description;
+
+          navText.append(navTitle, navDescription);
+          navItem.append(navIcon, navText);
+          navItem.addEventListener('click', () => {
+            location.hash = `/${tool.id}`;
+            closeSidebar();
+          });
+          group.appendChild(navItem);
+        });
+
+        sidebarNav.appendChild(group);
+      });
+
+      const emptyState = document.createElement('div');
+      emptyState.className = 'nav-empty';
+      emptyState.id = 'navEmpty';
+      emptyState.textContent = '没有找到匹配的工具';
+      sidebarNav.appendChild(emptyState);
+    }
+
+    function getRouteToolId() {
+      return decodeURIComponent(location.hash.replace(/^#\/?/, ''));
+    }
+
+    function applyToolSelection(tool) {
+      activeTool = tool;
+      document.title = `${tool.name} · 工具箱`;
+      workspaceTitle.textContent = tool.name;
+      workspaceSubtitle.textContent = `${tool.description} · ${tool.path.replace('./', '')}`;
+      toolFrame.title = tool.name;
+
+      if (toolFrame.dataset.currentPath !== tool.path) {
+        toolFrame.dataset.currentPath = tool.path;
+        toolFrame.src = tool.path;
+      }
+
+      sidebarNav.querySelectorAll('.nav-item').forEach(navItem => {
+        const isActive = navItem.dataset.toolId === tool.id;
+        navItem.classList.toggle('active', isActive);
+        navItem.setAttribute('aria-current', isActive ? 'page' : 'false');
+      });
+    }
+
+    function selectToolFromRoute() {
+      const routeToolId = getRouteToolId();
+      const tool = tools.find(item => item.id === routeToolId);
+
+      if (!tool) {
+        history.replaceState(null, '', `#/${tools[0].id}`);
+        applyToolSelection(tools[0]);
+        return;
+      }
+
+      applyToolSelection(tool);
+    }
+
+    function filterSidebar() {
+      const keyword = toolSearch.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      sidebarNav.querySelectorAll('.nav-item').forEach(navItem => {
+        const navTitle = navItem.querySelector('.nav-title').textContent.toLowerCase();
+        const navDescription = navItem.querySelector('.nav-description').textContent.toLowerCase();
+        const tool = tools.find(item => item.id === navItem.dataset.toolId);
+        const haystack = `${navTitle} ${navDescription} ${tool.keywords} ${tool.path}`.toLowerCase();
+        const isVisible = !keyword || haystack.includes(keyword);
+        navItem.hidden = !isVisible;
+        if (isVisible) visibleCount++;
+      });
+
+      sidebarNav.querySelectorAll('.nav-group').forEach(group => {
+        const hasVisibleItem = Array.from(group.querySelectorAll('.nav-item')).some(navItem => !navItem.hidden);
+        group.hidden = !hasVisibleItem;
+      });
+
+      const navEmpty = document.getElementById('navEmpty');
+      navEmpty.classList.toggle('visible', visibleCount === 0);
+    }
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebarBackdrop.classList.add('visible');
+      sidebarClose.focus();
+    }
+
+    function closeSidebar() {
+      if (window.innerWidth > 880) return;
+      sidebar.classList.remove('open');
+      sidebarBackdrop.classList.remove('visible');
+    }
+
+    function setSidebarCollapsed(collapsed) {
+      sidebar.classList.toggle('collapsed', collapsed);
+      sidebarCollapse.textContent = collapsed ? '»' : '«';
+      sidebarCollapse.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      sidebarCollapse.setAttribute('aria-label', collapsed ? '展开侧边栏' : '折叠侧边栏');
+      localStorage.setItem('toolbox-sidebar-collapsed', collapsed ? 'true' : 'false');
+    }
+
+    renderSidebar();
+
+    if (!location.hash) {
+      history.replaceState(null, '', `#/${tools[0].id}`);
+    }
+    selectToolFromRoute();
+    filterSidebar();
+
+    setTheme(localStorage.getItem('toolbox-theme') || 'light');
+    setSidebarCollapsed(localStorage.getItem('toolbox-sidebar-collapsed') === 'true');
+
+    window.addEventListener('hashchange', selectToolFromRoute);
+    window.addEventListener('popstate', selectToolFromRoute);
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    });
+
+    toolSearch.addEventListener('input', filterSidebar);
+
+    searchClear.addEventListener('click', () => {
+      toolSearch.value = '';
+      filterSidebar();
+      toolSearch.focus();
+    });
+
+    sidebarOpen.addEventListener('click', openSidebar);
+    sidebarClose.addEventListener('click', closeSidebar);
+    sidebarBackdrop.addEventListener('click', closeSidebar);
+    sidebarCollapse.addEventListener('click', () => {
+      setSidebarCollapsed(!sidebar.classList.contains('collapsed'));
+    });
+
+    reloadTool.addEventListener('click', () => {
+      toolFrame.src = activeTool.path;
+    });
+
+    openNewWindow.addEventListener('click', () => {
+      window.open(activeTool.path, '_blank', 'noopener');
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === '/' && document.activeElement !== toolSearch) {
+        event.preventDefault();
+        if (window.innerWidth <= 880) openSidebar();
+        if (sidebar.classList.contains('collapsed')) setSidebarCollapsed(false);
+        toolSearch.focus();
+      }
+
+      if (event.key === 'Escape') {
+        if (document.activeElement === toolSearch) {
+          toolSearch.value = '';
+          filterSidebar();
+        } else {
+          closeSidebar();
+        }
+      }
+    });
+  </script>
+</body>
 </html>

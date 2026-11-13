@@ -3,43 +3,430 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>生成二维码</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二维码工具</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            padding: 32px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+            color: #26313d;
+            background: #f4f7f9;
+        }
+
+        .page {
+            max-width: 880px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            margin: 0;
+            color: #66707b;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            background: transparent;
+            color: #53606d;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .tab:hover {
+            background: #e8eef3;
+        }
+
+        .tab.active {
+            background: #1266ab;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .panel {
+            display: none;
+            padding: 24px;
+            border: 1px solid #dce3e8;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(38, 49, 61, 0.06);
+        }
+
+        .panel.active {
+            display: block;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cfd8df;
+            border-radius: 8px;
+            font: inherit;
+            color: inherit;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            border-color: #1266ab;
+            outline: 2px solid rgba(18, 102, 171, 0.18);
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        button,
+        .secondary-button {
+            padding: 10px 18px;
+            border: 0;
+            border-radius: 8px;
+            background: #1266ab;
+            color: #fff;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        button:hover,
+        .secondary-button:hover {
+            background: #0d5490;
+        }
+
+        button.secondary {
+            background: #edf2f5;
+            color: #33404b;
+        }
+
+        button.secondary:hover {
+            background: #dfe7ec;
+        }
+
+        .result-area {
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .qr-canvas {
+            max-width: 100%;
+            border: 10px solid #fff;
+            border-radius: 4px;
+            box-shadow: 0 6px 20px rgba(38, 49, 61, 0.12);
+            background: #fff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .drop-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 220px;
+            padding: 24px;
+            border: 2px dashed #a9b8c3;
+            border-radius: 12px;
+            background: #f8fafb;
+            color: #66707b;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .drop-zone.dragover {
+            border-color: #1266ab;
+            background: #eaf2f8;
+            color: #1266ab;
+        }
+
+        .drop-zone strong {
+            color: #33404b;
+        }
+
+        .drop-zone p {
+            margin: 6px 0 0;
+            font-size: 13px;
+        }
+
+        .decode-preview {
+            display: block;
+            max-width: 100%;
+            max-height: 320px;
+            margin: 0 auto 20px;
+            border-radius: 8px;
+            box-shadow: 0 6px 20px rgba(38, 49, 61, 0.12);
+        }
+
+        .status {
+            margin: 12px 0 0;
+            color: #66707b;
+            font-size: 14px;
+        }
+
+        .status.success {
+            color: #187a41;
+        }
+
+        .status.error {
+            color: #b42323;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 16px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .tabs {
+                overflow-x: auto;
+            }
+
+            .panel {
+                padding: 16px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <h1>生成二维码</h1>
+    <div class="page">
+        <header class="page-header">
+            <h1>二维码工具</h1>
+            <p class="subtitle">生成二维码，或从本地图片中解析二维码内容。</p>
+        </header>
 
-    <label for="text-input">请输入文字:</label>
-    <textarea id="text-input" placeholder="在此输入文字..." rows="8" cols="50"></textarea>
-    <button onclick="generateQRCode()">生成二维码</button>
+        <div class="tabs" role="tablist">
+            <button class="tab active" type="button" role="tab" aria-selected="true" data-panel="generate">生成二维码</button>
+            <button class="tab" type="button" role="tab" aria-selected="false" data-panel="decode">解析二维码</button>
+        </div>
 
-    <div id="qr-code-container"></div>
+        <section class="panel active" id="generate-panel" role="tabpanel">
+            <label for="text-input">二维码内容</label>
+            <textarea id="text-input" rows="6" placeholder="输入网址、文本或其他内容..."></textarea>
 
+            <div class="actions">
+                <button type="button" id="generate-button">生成二维码</button>
+                <a class="secondary-button hidden" id="download-button" download="qrcode.png">下载图片</a>
+            </div>
+
+            <div class="result-area">
+                <canvas class="qr-canvas hidden" id="qr-canvas"></canvas>
+            </div>
+        </section>
+
+        <section class="panel" id="decode-panel" role="tabpanel">
+            <div class="drop-zone" id="drop-zone">
+                <strong>点击选择二维码图片</strong>
+                <p>也可以把图片拖到这里，或直接 Ctrl/⌘ + V 粘贴</p>
+            </div>
+            <input class="hidden" id="file-input" type="file" accept="image/*">
+
+            <div class="result-area">
+                <img class="decode-preview hidden" id="decode-preview" alt="待解析的二维码图片">
+                <label class="hidden" for="decoded-text">解析结果</label>
+                <textarea class="hidden" id="decoded-text" rows="6" readonly></textarea>
+                <div class="actions result-actions">
+                    <button class="secondary hidden" id="copy-button" type="button">复制结果</button>
+                </div>
+                <p class="status" id="decode-status">等待选择图片...</p>
+            </div>
+        </section>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script>
-        const container = document.getElementById("qr-code-container");
+        const tabs = Array.from(document.querySelectorAll('.tab'));
+        const textInput = document.getElementById('text-input');
+        const generateButton = document.getElementById('generate-button');
+        const downloadButton = document.getElementById('download-button');
+        const qrCanvas = document.getElementById('qr-canvas');
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const decodePreview = document.getElementById('decode-preview');
+        const decodedText = document.getElementById('decoded-text');
+        const decodedLabel = decodedText.previousElementSibling;
+        const copyButton = document.getElementById('copy-button');
+        const decodeStatus = document.getElementById('decode-status');
+        let currentImageUrl = null;
 
-
-        function generateQRCode() {
-            const text = document.getElementById('text-input').value;
-            if (text) {
-                QRCode.toCanvas(text, { errorCorrectionLevel: 'H' }, function(err, canvas) {
-                    if (err) throw err;
-
-                    container.innerHTML = '';
-                    container.appendChild(canvas);
+        tabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                const targetPanel = document.getElementById(`${tab.dataset.panel}-panel`);
+                tabs.forEach((item) => {
+                    const active = item === tab;
+                    item.classList.toggle('active', active);
+                    item.setAttribute('aria-selected', active);
                 });
-            } else {
-                alert("请输入文字！");
-            }
+                document.querySelectorAll('.panel').forEach((panel) => {
+                    panel.classList.toggle('active', panel === targetPanel);
+                });
+            });
+        });
+
+        function setStatus(message, type = '') {
+            decodeStatus.textContent = message;
+            decodeStatus.className = `status ${type}`.trim();
         }
+
+        generateButton.addEventListener('click', () => {
+            const text = textInput.value.trim();
+            if (!text) {
+                textInput.focus();
+                return;
+            }
+
+            QRCode.toCanvas(qrCanvas, text, { errorCorrectionLevel: 'H', width: 280 }, (error) => {
+                if (error) {
+                    setStatus(`生成失败：${error.message}`, 'error');
+                    return;
+                }
+                qrCanvas.classList.remove('hidden');
+                downloadButton.href = qrCanvas.toDataURL('image/png');
+                downloadButton.classList.remove('hidden');
+            });
+        });
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) {
+                decodeFile(fileInput.files[0]);
+                fileInput.value = '';
+            }
+        });
+
+        dropZone.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+
+        dropZone.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropZone.classList.remove('dragover');
+            const file = Array.from(event.dataTransfer.files).find((item) => item.type.startsWith('image/'));
+            if (file) {
+                decodeFile(file);
+            } else {
+                setStatus('请选择图片文件。', 'error');
+            }
+        });
+
+        document.addEventListener('paste', (event) => {
+            if (!document.getElementById('decode-panel').classList.contains('active')) {
+                return;
+            }
+
+            const file = Array.from(event.clipboardData.items)
+                .find((item) => item.type.startsWith('image/'));
+            if (file) {
+                decodeFile(file.getAsFile());
+            }
+        });
+
+        function decodeFile(file) {
+            if (!file) {
+                return;
+            }
+            if (!file.type.startsWith('image/')) {
+                setStatus('仅支持图片文件。', 'error');
+                return;
+            }
+
+            const image = new Image();
+            if (currentImageUrl) {
+                URL.revokeObjectURL(currentImageUrl);
+            }
+            currentImageUrl = URL.createObjectURL(file);
+            image.onload = () => decodeImage(image);
+            image.onerror = () => setStatus('图片读取失败，请换一张图片。', 'error');
+            image.src = currentImageUrl;
+            decodePreview.src = currentImageUrl;
+            decodePreview.classList.remove('hidden');
+            setStatus('正在解析...');
+            decodedText.classList.add('hidden');
+            decodedLabel.classList.add('hidden');
+            copyButton.classList.add('hidden');
+        }
+
+        function decodeImage(image) {
+            const maxSize = 1800;
+            const scale = Math.min(1, maxSize / Math.max(image.naturalWidth, image.naturalHeight));
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+            canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+            const context = canvas.getContext('2d', { willReadFrequently: true });
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const result = jsQR(imageData.data, canvas.width, canvas.height, {
+                inversionAttempts: 'attemptBoth'
+            });
+
+            if (!result) {
+                decodedText.value = '';
+                setStatus('未识别到二维码，请确保图片清晰且二维码完整。', 'error');
+                return;
+            }
+
+            decodedText.value = result.data;
+            decodedText.classList.remove('hidden');
+            decodedLabel.classList.remove('hidden');
+            copyButton.classList.remove('hidden');
+            setStatus('解析成功。', 'success');
+        }
+
+        copyButton.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(decodedText.value);
+                setStatus('已复制解析结果。', 'success');
+            } catch (error) {
+                decodedText.select();
+                document.execCommand('copy');
+                setStatus('已复制解析结果。', 'success');
+            }
+        });
     </script>
 </body>
+
 </html>
