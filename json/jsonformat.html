@@ -65,16 +65,55 @@
     <!--  -->
     <script type="text/javascript">
 
-        $('#json-src').keyup(function () {
-            var content = $.trim($(this).val());
+        function toErrorText(message) {
+            return String(message)
+                .replace(/<br\s*\/?>/gi, '\n')
+                .replace(/<i[^>]*fa-arrow-up[^>]*><\/i>/gi, '↑')
+                .replace(/<\/?code>/gi, '')
+                .replace(/&nbsp;/gi, ' ');
+        }
+
+        function describeError(content, error) {
+            var message = (error && error.message) ? error.message : String(error);
+
+            if (message.indexOf('解析错误') !== -1) {
+                return message;
+            }
+
+            try {
+                JSON.parse(content);
+            } catch (nativeError) {
+                return nativeError.message;
+            }
+
+            return message;
+        }
+
+        function renderJson() {
+            var content = $.trim($('#json-src').val());
+
+            if (content === '') {
+                $('#json-target').html('');
+                return;
+            }
 
             content = content.replace(/[\r\n]/g, "");
-            current_json = jsonlint.parse(content);
-            current_json_str = JSON.stringify(current_json);
-            result = new JSONFormat(content, 4).toString();
 
-            $('#json-target').html(result);
-        });
+            try {
+                jsonlint.parse(content);
+                $('#json-target').html(new JSONFormat(content, 4).toString());
+            } catch (error) {
+                var $message = $('<div>').css({
+                    color: '#f1592a',
+                    fontWeight: 'bold',
+                    whiteSpace: 'pre-wrap'
+                }).text('解析错误：' + toErrorText(describeError(content, error)));
+
+                $('#json-target').empty().append($message);
+            }
+        }
+
+        $('#json-src').on('input', renderJson);
     </script>
 </body>
 

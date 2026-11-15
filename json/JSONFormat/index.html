@@ -96,6 +96,19 @@ var shown_flag = false;
 var compress_flag = false;
 var xml_text;
 $('.tip').tooltip();
+function escapeHtml(text){
+    return String(text).replace(/[&<>"']/g, function(c){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+}
+function formatErrorMessage(error){
+    var message = (error && error.message) ? error.message : String(error);
+    return message
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<i[^>]*fa-arrow-up[^>]*><\/i>/gi, '↑')
+        .replace(/<\/?code>/gi, '')
+        .replace(/&nbsp;/gi, ' ');
+}
 function init(){
     xml_flag = false;
     zip_flag = false;
@@ -109,6 +122,7 @@ $('#json-src').keyup(function(){
     init();
     var content = $.trim($(this).val());
     var result = '';
+    var errorText = '';
     if (content!='') {
         //如果是xml,那么转换为json
         if (content.substr(0,1) === '<' && content.substr(-1,1) === '>') {
@@ -116,8 +130,9 @@ $('#json-src').keyup(function(){
                 var json_obj = $.xml2json(content);
                 content = JSON.stringify(json_obj);
             }catch(e){
-                result = '解析错误：<span style="color: #f1592a;font-weight:bold;">' + e.message + '</span>';
-                current_json_str = result;
+                errorText = formatErrorMessage(e);
+                current_json_str = '解析错误：' + errorText;
+                result = '解析错误：<span style="color: #f1592a;font-weight:bold;white-space:pre-wrap;">' + escapeHtml(errorText) + '</span>';
                 $('#json-target').html(result);
                 return false;
             }
@@ -128,8 +143,9 @@ $('#json-src').keyup(function(){
             current_json_str = JSON.stringify(current_json);
             result = new JSONFormat(content,4).toString();
         }catch(e){
-            result = '<span style="color: #f1592a;font-weight:bold;">' + e + '</span>';
-            current_json_str = result;
+            errorText = formatErrorMessage(e);
+            current_json_str = errorText;
+            result = '<span style="color: #f1592a;font-weight:bold;white-space:pre-wrap;">' + escapeHtml(errorText) + '</span>';
         }
         $('#json-target').html(result);
     }else{
@@ -141,7 +157,10 @@ $('.xml').click(function(){
         $('#json-src').keyup();
     }else{
         var result = $.json2xml(current_json);
-        $('#json-target').html('<textarea style="width:100%;position:absolute;height: 80vh;min-height:480px;border:0;resize:none;">'+result+'</textarea>');
+        var $xmlView = $('<textarea></textarea>')
+            .attr('style','width:100%;position:absolute;height: 80vh;min-height:480px;border:0;resize:none;')
+            .val(result);
+        $('#json-target').empty().append($xmlView);
         xml_text = result;
         xml_flag = true;
         $(this).attr('style','color:#15b374;');
@@ -178,7 +197,7 @@ $('.zip').click(function(){
     if (zip_flag) {
         $('#json-src').keyup();
     }else{
-        $('#json-target').html(current_json_str);
+        $('#json-target').html(escapeHtml(current_json_str));
         zip_flag = true;
       	xml_flag = false;
         $(this).attr('style','color:#15b374;');
