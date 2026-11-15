@@ -61,7 +61,6 @@ GitHub 笔记、一封情书和 GitHub 待办都使用浏览器直接请求 GitH
 ├── toolbox/                  # 时间戳、图片转换等基础工具
 ├── todolist/                 # GitHub Issues 待办工具
 ├── My97DatePicker/           # 日期控件依赖
-└── upload.sh                 # 旧的 git pull/add/commit/push 辅助脚本
 ```
 
 ## 部署
@@ -72,8 +71,6 @@ GitHub 笔记、一封情书和 GitHub 待办都使用浏览器直接请求 GitH
 
 - Mermaid、二维码库和部分 JSON 工具依赖外部 CDN，需要浏览器可访问对应网络资源。
 - GitHub 工具依赖 GitHub API 的跨域请求能力，请确保网络可访问 GitHub。
-- `index2.html` 和 `toolbox/time.html` 更偏历史或测试页面，未纳入统一工具导航。
-- `upload.sh` 会执行 `git add .` 并使用随机 emoji 生成提交信息，使用前请确认改动范围，日常开发更建议手动提交。
 
 ## License
 
