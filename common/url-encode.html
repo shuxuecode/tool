@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>URL 编解码</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f5f6f8;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 20px;
+  }
+  .container {
+    width: 100%;
+    max-width: 1080px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 32px;
+  }
+  h1 {
+    font-size: 22px;
+    color: #303133;
+    margin-bottom: 8px;
+  }
+  .description {
+    color: #606266;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .codec-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+  .field-title {
+    display: block;
+    margin-bottom: 10px;
+    color: #303133;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  textarea {
+    width: 100%;
+    height: 380px;
+    padding: 12px 14px;
+    border: 1px solid #dcdfe6;
+    border-radius: 8px;
+    color: #303133;
+    background: #fff;
+    font-size: 14px;
+    line-height: 1.6;
+    font-family: Menlo, Consolas, "Courier New", monospace;
+    outline: none;
+    resize: vertical;
+    overflow-wrap: anywhere;
+    transition: border-color 0.2s;
+  }
+  textarea:focus {
+    border-color: #409eff;
+  }
+  textarea.error {
+    color: #f56c6c;
+    background: #fef0f0;
+    border-color: #fbc4c4;
+  }
+  .codec-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 190px;
+    padding-top: 31px;
+  }
+  .mode-option {
+    position: relative;
+    display: block;
+    min-height: 40px;
+    border: 1px solid #dcdfe6;
+    border-radius: 8px;
+    background: #fff;
+    color: #606266;
+    font-size: 13px;
+    text-align: center;
+    line-height: 38px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    touch-action: manipulation;
+  }
+  .mode-option:hover {
+    border-color: #409eff;
+    color: #409eff;
+  }
+  .mode-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .mode-option:has(input:checked) {
+    border-color: #409eff;
+    background: #ecf5ff;
+    color: #409eff;
+    font-weight: 600;
+  }
+  .mode-option:has(input:checked) .mode-check {
+    visibility: visible;
+  }
+  .mode-check {
+    visibility: hidden;
+    margin-right: 4px;
+  }
+  .mode-option:has(input:focus-visible) {
+    outline: 2px solid #409eff;
+    outline-offset: 2px;
+  }
+  button {
+    padding: 12px 16px;
+    min-height: 44px;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    background: #fff;
+    color: #606266;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    touch-action: manipulation;
+  }
+  button:hover {
+    border-color: #409eff;
+    color: #409eff;
+  }
+  button.primary {
+    background: #409eff;
+    border-color: #409eff;
+    color: #fff;
+  }
+  button.primary:hover {
+    background: #66b1ff;
+    border-color: #66b1ff;
+  }
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .status {
+    min-height: 20px;
+    margin-top: 10px;
+    color: #909399;
+    font-size: 13px;
+    text-align: right;
+  }
+  @media (max-width: 860px) {
+    body {
+      padding: 24px 12px;
+      padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    }
+    .container {
+      padding: 20px 16px;
+      border-radius: 10px;
+    }
+    h1 {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+    .codec-layout {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .codec-controls {
+      width: 100%;
+      padding-top: 0;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .mode-option,
+    .codec-controls button {
+      flex: 1 1 45%;
+    }
+    textarea {
+      height: 200px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>URL 编解码</h1>
+    <p class="description">使用 encodeURI / encodeURIComponent 编码字符串，使用 decodeURI / decodeURIComponent 还原。encodeURI 保留 : / ? # &amp; = 等 URL 特殊字符，适合处理完整 URL；encodeURIComponent 会一并编码这些字符，适合处理单个参数值。</p>
+
+    <div class="codec-layout">
+      <div class="field">
+        <label class="field-title" for="sourceInput">输入内容</label>
+        <textarea id="sourceInput" placeholder="在此输入待编码或解码的字符串" spellcheck="false"></textarea>
+      </div>
+
+      <div class="codec-controls">
+        <label class="mode-option"><input type="radio" name="mode" value="uri"><span class="mode-check" aria-hidden="true">✓</span><span>encodeURI</span></label>
+        <label class="mode-option"><input type="radio" name="mode" value="component" checked><span class="mode-check" aria-hidden="true">✓</span><span>encodeURIComponent</span></label>
+        <button id="encodeButton" class="primary" type="button">URL编码 ❯</button>
+        <button id="decodeButton" type="button">❮ URL解码</button>
+      </div>
+
+      <div class="field">
+        <label class="field-title" for="resultOutput">处理结果</label>
+        <textarea id="resultOutput" placeholder="处理结果" spellcheck="false"></textarea>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="pasteButton" type="button">粘贴</button>
+      <button id="copyButton" class="primary" type="button">复制结果</button>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+
+<script>
+  const sourceInput = document.getElementById('sourceInput');
+  const resultOutput = document.getElementById('resultOutput');
+  const status = document.getElementById('status');
+  const codecFunctions = {
+    uri: { encode: encodeURI, decode: decodeURI },
+    component: { encode: encodeURIComponent, decode: decodeURIComponent }
+  };
+  let lastDirection = null;
+
+  function getMode() {
+    return document.querySelector('input[name="mode"]:checked').value;
+  }
+
+  function run(direction) {
+    lastDirection = direction;
+    status.textContent = '';
+    resultOutput.classList.remove('error');
+
+    if (!sourceInput.value) {
+      resultOutput.value = '';
+      return;
+    }
+
+    try {
+      resultOutput.value = codecFunctions[getMode()][direction](sourceInput.value);
+    } catch (error) {
+      resultOutput.value = `${direction === 'encode' ? '编码' : '解码'}失败：${error.message}`;
+      resultOutput.classList.add('error');
+    }
+  }
+
+  document.getElementById('encodeButton').addEventListener('click', () => run('encode'));
+  document.getElementById('decodeButton').addEventListener('click', () => run('decode'));
+
+  document.querySelectorAll('input[name="mode"]').forEach(input => {
+    input.addEventListener('change', () => {
+      if (lastDirection) run(lastDirection);
+    });
+  });
+
+  document.getElementById('pasteButton').addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text) sourceInput.value = text;
+      sourceInput.focus();
+    } catch (error) {
+      status.textContent = '无法读取剪贴板，请长按输入框选择粘贴。';
+    }
+  });
+
+  document.getElementById('copyButton').addEventListener('click', async () => {
+    if (!resultOutput.value || resultOutput.classList.contains('error')) {
+      status.textContent = '暂无可复制的结果。';
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(resultOutput.value);
+      status.textContent = '已复制处理结果。';
+    } catch (error) {
+      status.textContent = '复制失败，请手动选择结果复制。';
+    }
+  });
+</script>
+</body>
+</html>

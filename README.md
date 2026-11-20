@@ -23,6 +23,7 @@ Tool 是一个纯静态、无后端服务的在线工具箱。项目以 `index.h
 - [图片转 Base64](./toolbox/image2Base64.html)：将本地图片转换为 Data URL。
 - [二维码工具](./common/qrcode.html)：生成二维码并解析图片中的二维码。
 - [字数统计](./common/char-counter.html)：统计字符、汉字、英文单词等信息。
+- [URL 编解码](./common/url-encode.html)：使用 encodeURI / encodeURIComponent 编码与解码字符串。
 
 ## 本地运行
 
@@ -69,7 +70,7 @@ GitHub 笔记、一封情书和 GitHub 待办都使用浏览器直接请求 GitH
 
 ## 注意事项
 
-- Mermaid、二维码库和部分 JSON 工具依赖外部 CDN，需要浏览器可访问对应网络资源。
+- Mermaid 库已内置在 `common/js/mermaid.min.js`；二维码库和部分 JSON 工具依赖外部 CDN，需要浏览器可访问对应网络资源。
 - GitHub 工具依赖 GitHub API 的跨域请求能力，请确保网络可访问 GitHub。
 
 ## License

@@ -724,6 +724,16 @@
         groupName: '转换与文本',
         icon: '字',
         keywords: 'text count word chinese character 字数 统计'
+      },
+      {
+        id: 'url-encode',
+        name: 'URL 编解码',
+        description: 'encodeURI / encodeURIComponent 编解码',
+        path: './common/url-encode.html',
+        category: 'conversion',
+        groupName: '转换与文本',
+        icon: '%',
+        keywords: 'url encode decode encodeURIComponent encodeURI escape 编码 解码 转义 链接'
       }
     ];
 
@@ -818,7 +828,7 @@
       activeTool = tool;
       document.title = `${tool.name} · 工具箱`;
       workspaceTitle.textContent = tool.name;
-      workspaceSubtitle.textContent = `${tool.description} · ${tool.path.replace('./', '')}`;
+      workspaceSubtitle.textContent = tool.description;
       toolFrame.title = tool.name;
 
       if (toolFrame.dataset.currentPath !== tool.path) {
